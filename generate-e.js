@@ -99,10 +99,10 @@ menuItems.forEach(menu => {
                 const cSpecies = label.cSpecies ? `Species: ${label.cSpecies}\n` : '';
                 const cPronouns = label.cPronouns ? `Pronouns: ${label.cPronouns}\n` : '';
                 const cGender = label.cGender ? `Gender: ${label.cGender}\n` : '';
-                const cSexuality = label.cSexuality ? `Sexuality: ${label.cSexuality}\n` : '';
+                const cBirthday = label.cBirthday ? `Birthday: ${label.cBirthday}\n` : '';
                 const cNicknames = label.cNicknames ? `Nicknames: ${label.cNicknames}\n` : '';
 
-                desc = `${cSpecies}${cPronouns}${cGender}${cSexuality}${cNicknames}`.trim();
+                desc = `${cSpecies}${cPronouns}${cGender}${cBirthday}${cNicknames}`.trim();
             }
 
             // TWITTER CARD TYPE
