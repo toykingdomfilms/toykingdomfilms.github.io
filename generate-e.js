@@ -97,12 +97,12 @@ menuItems.forEach(menu => {
             let desc = label.excerpt || "View card";
             if (label.isCharacter) {
                 const cSpecies = label.cSpecies ? `Species: ${label.cSpecies}\n` : '';
-                const cPronouns = label.cPronouns ? `Pronouns: ${label.cPronouns}\n` : '';
+                const cAge = label.cAge ? `Age: ${label.cAge}\n` : '';
                 const cGender = label.cGender ? `Gender: ${label.cGender}\n` : '';
                 const cBirthday = label.cBirthday ? `Birthday: ${label.cBirthday}\n` : '';
                 const cNicknames = label.cNicknames ? `Nicknames: ${label.cNicknames}\n` : '';
 
-                desc = `${cSpecies}${cPronouns}${cGender}${cBirthday}${cNicknames}`.trim();
+                desc = `${cSpecies}${cAge}${cGender}${cBirthday}${cNicknames}`.trim();
             }
 
             // TWITTER CARD TYPE
