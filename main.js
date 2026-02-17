@@ -1,12 +1,7 @@
 /* -------------------------- CONFIG -------------------------- */
 
-// What to open if menu logo is clicked in orbit mode?
-let menuLogoRedirect = '';  // uses 'menuId:cardId'
-
-
 let SIMPLE_MODE = true;
 // If you prefer to always use an orbit-less interface, set this to true
-// SIMPLE_MODE = true;
 
 // Simple mode index data
 const MAIN_MENU_TITLE = 'Main Menu';
@@ -36,11 +31,12 @@ const LOCAL_MODE = 1;
    Helpers
    -------------------------- */
 
-// === Utility helpers
+// Utility helpers
 const $ = (sel, root = document) => root.querySelector(sel);
 const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
 const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
 
+// get CSS variable value
 function getCSSVar(name, parse = 'string') {
     const val = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
     if (parse === 'int') return parseInt(val) || 0;
@@ -68,7 +64,6 @@ const focusedLayout = document.getElementById('focusedLayout');
 const focusedCardArea = document.getElementById('focusedCardArea');
 const detailArea = document.getElementById('detailArea');
 const backBtn = document.getElementById('backBtn');
-const centerBtn = document.getElementById('centerBtn');
 const rerollBtn = document.getElementById('rerollBtn');
 const menuLogo = $('.menu-logo');
 const menuStage = $('.menu-stage');
@@ -113,82 +108,6 @@ function setMenuStageTransform(x, y, options = {}) {
     }
 }
 
-/*
-// Shared function used by mouse/touch/wheel to update transforms
-function setMenuStageTransform(x, y, options = {}) {
-    const scale = getCSSVar('--menu-stage-scale');
-    menuStage.style.transition = options.transition || menuStage.style.transition;
-    menuStage.style.transform = `translate(${x}px, ${y}px) scale(${scale})`;
-
-}
-
-function wrap(v, min, max) {
-    const range = max - min;
-    return ((((v - min) % range) + range) % range) + min;
-}
-
-function moveStars(x, y) {
-    if (!starfield) return;
-
-    const stars = starfield.querySelectorAll('.star');
-
-    stars.forEach(s => {
-        const depth = parseFloat(s.dataset.depth) || 1;
-
-        let px = -x * parallaxFactor * depth + parseInt(s.dataset.x);
-        let py = -y * parallaxFactor * depth + parseInt(s.dataset.y);
-
-        let px2 = wrap(px, -STAR_RANGE, STAR_RANGE);
-        let py2 = wrap(py, -STAR_RANGE, STAR_RANGE);
-        s.style.transition = 'none'
-        s.style.transform = `translate(${px2}px, ${py2}px)`;
-    });
-}
-    */
-
-// Begin drag (mouse or touch)
-function beginDrag(clientX, clientY) {
-    if (SIMPLE_MODE) return;
-    isDragging = true;
-    startX = clientX - currentX;
-    startY = clientY - currentY;
-    menuStage.style.cursor = 'grab';
-    menuStage.style.transition = 'none';
-}
-
-// Move during drag (mouse or touch)
-let lastDrag = 0;
-function dragTo(clientX, clientY) {
-    if (SIMPLE_MODE) return;
-    const now = performance.now();
-    if (now - lastDrag < 16) return;
-    lastDrag = now;
-    if (!isDragging) return;
-    currentX = clientX - startX;
-    currentY = clientY - startY;
-    requestAnimationFrame(() => {
-        setMenuStageTransform(currentX, currentY, { transition: 'transform 0.2s cubic-bezier(.2, .9, .2, 1)' });
-    });
-    $('.splash-text-info').style.opacity = 0;
-}
-
-// End drag
-function endDrag() {
-    if (SIMPLE_MODE) return;
-    isDragging = false;
-    menuStage.style.cursor = 'default';
-    updateCenterButtonVisibility();
-}
-
-// Mouse events
-menuStage.addEventListener('mousedown', (e) => {
-    beginDrag(e.clientX, e.clientY);
-});
-window.addEventListener('mousemove', (e) => {
-    dragTo(e.clientX, e.clientY);
-});
-window.addEventListener('mouseup', endDrag);
-
 // Touch events (single-finger only)
 menuStage.addEventListener('touchstart', (e) => {
     if (e.touches.length !== 1) return;
@@ -198,19 +117,10 @@ window.addEventListener('touchmove', (e) => {
     if (!isDragging || e.touches.length !== 1) return;
     dragTo(e.touches[0].clientX, e.touches[0].clientY);
 }, { passive: true });
-window.addEventListener('touchend', endDrag);
 
 // Two-finger trackpad-like gesture (wheel) - keep original thresholds
 menuStage.addEventListener('wheel', (e) => {
     e.preventDefault();
-    if (SIMPLE_MODE) return;
-    if (Math.abs(e.deltaX) < 100 && Math.abs(e.deltaY) < 100) {
-        currentX -= e.deltaX * 1.5;
-        currentY -= e.deltaY * 1.5;
-        setMenuStageTransform(currentX, currentY);
-        $('.splash-text-info').style.opacity = 0;
-        updateCenterButtonVisibility();
-    }
 }, { passive: false });
 
 // Snap camera back to center (used by center button & resize)
@@ -262,124 +172,12 @@ let orbitRadius = getCSSVar('--menu-radius', 'int') || 180;
 let orbitDuration = getCSSVar('--ring-rotation-duration', 'float') || 60;
 if (ring) ring.style.animationDuration = getCSSVar('--ring-rotation-duration') || '60s';
 
-// Visual orbit rings (regeneratable)
-function initOrbitRings() {
-    if (SIMPLE_MODE) return;
-    // remove existing visuals
-    $$('.orbit-visual').forEach(el => el.remove());
-
-    const baseRadius = getCSSVar('--menu-radius', 'int') || 180;
-    // collect unique orbit layers - menuItems assumed global from original file
-    const uniqueOrbits = [...new Set(menuItems.filter(m => !m.hidden).map(m => m.orbit || 1))];
-
-    uniqueOrbits.forEach(orbit => {
-        const orbitRing = document.createElement('div');
-        orbitRing.className = 'orbit-visual pulse';
-        if (!appLoaded) orbitRing.classList.add('ringHidden');
-
-        const oData = orbitData.find(o => o.orbit === orbit);
-        const oScaleX = oData?.scaleX || getCSSVar('--menu-orbit-scale-x', 'float');
-        const oScaleY = oData?.scaleY || getCSSVar('--menu-orbit-scale-y', 'float');
-
-        const diameter = (baseRadius * orbit * 1.2 + 60) * 2;
-        orbitRing.style.width = `${diameter}px`;
-        orbitRing.style.height = `${diameter}px`;
-        orbitRing.style.left = '50%';
-        orbitRing.style.top = '50%';
-        orbitRing.style.transform = `translate(-50%, -50%) scale(${oScaleX}, ${oScaleY})`;
-        orbitRing.style.opacity = 0.45 / orbit;
-        orbitRing.style.zIndex = '-1';
-        orbitRing.style.pointerEvents = 'auto';
-        orbitRing.style.position = 'absolute';
-
-        menuStage.insertBefore(orbitRing, menuStage.firstChild);
-    });
-}
-
 // orbit buttons array
 const orbitButtons = [];
 function initMenu() {
     // Clear existing rings and orbit buttons
     $$('.ring').forEach(r => r.remove());
     orbitButtons.length = 0;
-
-    if (SIMPLE_MODE) return;
-
-    const grouped = {};
-    menuItems.forEach(m => {
-        if (m.hidden) return;
-        const orbit = m.orbit;
-        if (!grouped[orbit]) grouped[orbit] = [];
-        grouped[orbit].push(m);
-    });
-
-    Object.keys(grouped).forEach(layerKey => {
-        const items = grouped[layerKey];
-        const orbit = parseFloat(layerKey, 10);
-
-        const ringLayer = document.createElement('div');
-        ringLayer.className = 'ring';
-        if (!appLoaded) ringLayer.classList.add('ringHidden');
-        ringLayer.style.zIndex = '10';
-
-        const direction = orbit % 2 === 0 ? -1 : 1;
-        const randomPhase = Math.random() * 360;
-        const count = items.length;
-
-        items.forEach((m, index) => {
-            const angleDeg = (index / count + 0.75) * 360 + randomPhase;
-            const angleRad = (angleDeg * Math.PI) / 180;
-
-            const btn = document.createElement('button');
-            btn.className = 'menu-button';
-            btn.dataset.angle0 = angleRad; // initial radians
-            btn.dataset.orbit = orbit;
-            btn.dataset.menuQ = m.menuId;
-            btn.setAttribute('aria-label', m.title);
-            btn.style.setProperty('--glow', m.color);
-            btn.style.background = m.color || 'transparent';
-            btn.innerHTML = `
-                <div class="inner">
-                    <div class="menu-thumb-square lazy-bg" data-bg='${m.image || ''}'></div>
-                    ${m.showTitle && m.title ? `<div class="menu-subtitle">${m.title}</div>` : ''}
-                </div>
-            `;
-
-            // compute radius & motion params
-            const baseRadius = getCSSVar('--menu-radius', 'int') || 180;
-            let r = baseRadius * orbit * 1.2 + 60;
-            if (orbit === 0) r = 0;
-            btn.dataset.radius = r;
-
-            const baseDuration = orbitDuration;
-            const periodSec = baseDuration * orbit; // seconds per revolution
-            const omega = (2 * Math.PI) / periodSec * direction; // radians/sec
-            btn.dataset.omega = omega;
-            btn.dataset.scale = m.scale || 1;
-
-            const oData = orbitData.find(o => o.orbit === orbit);
-            const oScaleX = oData?.scaleX || getCSSVar('--menu-orbit-scale-x', 'float');
-            const oScaleY = oData?.scaleY || getCSSVar('--menu-orbit-scale-y', 'float');
-
-            const x0 = Math.cos(angleRad) * r * oScaleX;
-            const y0 = Math.sin(angleRad) * r * oScaleY;
-            btn.style.left = '50%';
-            btn.style.top = '50%';
-            btn.style.transform = `translate3d(${x0}px, ${y0}px, 0) scale(${m.scale || 1})`;
-
-            btn.tabIndex = -1;
-            btn.setAttribute('aria-hidden', 'true');
-
-            btn.addEventListener('click', () => { if (!isTransitioning) { openMenu(m, btn) } });
-            ringLayer.appendChild(btn);
-            orbitButtons.push(btn);
-        });
-
-        menuStage.appendChild(ringLayer);
-    });
-
-    startOrbitAnimation();
-    initOrbitRings();
 }
 
 // Orbit animation loop
@@ -671,20 +469,6 @@ function initContent() {
             }
         })
     })
-
-    // add faraway orbit just so the drag layout work (I GAVE UP ON ALTERNATIVES LOL)
-    if (!SIMPLE_MODE) {
-        faraway = {
-            menuId: 'farawaymenu',
-            title: 'faraway',
-            showTitle: false,
-            orbit: 999,
-            scale: 0.01,
-            invisible: true,
-            labels: []
-        }
-        menuItems.push(faraway);
-    }
 }
 initContent();
 
@@ -1543,125 +1327,6 @@ cancelSearch.addEventListener('click', () => {
 });
 
 
-// button to hide ui elements
-const hideBtn = document.getElementById('hideBtn')
-
-let uiHidden = false;
-let hiddenElements = [];
-
-// Function to hide all UI elements
-function hideUIs() {
-    const panels = [
-        document.getElementById('uiPanelTop'),
-        document.getElementById('uiPanelBottom')
-    ].filter(panel => panel !== null);
-
-    panels.forEach(panel => {
-        const children = Array.from(panel.children);
-        children.forEach(child => {
-            if (child !== hideBtn && !child.classList.contains('always-visible')) {
-                hiddenElements.push({
-                    element: child,
-                    originalDisplay: child.style.display
-                });
-                child.style.display = 'none';
-            }
-        });
-    });
-
-    hideBtn.classList.add('hidden-mode');
-    hideBtn.querySelector('span').classList.add('hidden');
-    uiHidden = true;
-}
-
-// Function to show all UI elements
-function showUIs() {
-    hiddenElements.forEach(item => {
-        item.element.style.display = item.originalDisplay || '';
-    });
-
-    hiddenElements = [];
-    hideBtn.classList.remove('hidden-mode');
-    hideBtn.querySelector('span').classList.remove('hidden');
-    uiHidden = false;
-}
-
-function toggleUIs() {
-    if (!uiHidden) {
-        hideUIs();
-    } else {
-        showUIs();
-    }
-}
-
-// Toggle function for the hide button
-hideBtn.addEventListener('click', toggleUIs);
-
-// Function to check if UI is hidden and show it when needed
-function vizUI() {
-    if (uiHidden) {
-        showUIs();
-    }
-}
-
-
-
-
-/* --------------------------
-   Mode switcher
-   -------------------------- */
-
-// Read SIMPLE_MODE from localStorage
-function getSimpleMode() {
-    // Try localStorage first (modern approach)
-    const saved = localStorage.getItem('simpleMode');
-    if (saved !== null) {
-        return saved === 'true' || saved === '1' ? 1 : 0;
-    }
-
-    // Fallback to cookie for older browsers
-    const cookies = document.cookie.split(';').reduce((acc, cookie) => {
-        const [key, value] = cookie.trim().split('=');
-        acc[key] = value;
-        return acc;
-    }, {});
-
-    if (cookies.simpleMode !== undefined) {
-        return cookies.simpleMode === 'true' || cookies.simpleMode === '1' ? 1 : 0;
-    }
-
-    return 0;
-}
-
-// Save SIMPLE_MODE preference
-function setSimpleMode(value) {
-    const boolValue = value ? 1 : 0;
-    SIMPLE_MODE = boolValue;
-    localStorage.setItem('simpleMode', boolValue.toString());
-    document.cookie = `simpleMode=${boolValue}; path=/; max-age=${365 * 24 * 60 * 60}`; // 1 year expiry
-    return boolValue;
-}
-
-
-const settingsBtn = document.getElementById('settingsBtn');
-
-function toggleViewMode() {
-    const newMode = !SIMPLE_MODE;
-    if (confirm(`Switch to ${newMode ? 'Simple Mode' : 'Orbit Mode'}? Page will be reloaded.`)) {
-        setSimpleMode(newMode);
-        setTimeout(() => {
-            window.location.reload();
-        }, 500);
-    }
-}
-
-// Initialize mode toggle
-if (settingsBtn) {
-    settingsBtn?.addEventListener('click', (e) => {toggleViewMode});
-}
-
-
-if (SIMPLE_MODE) $('.splash-text-info').dataset.infodesc = "(click to open main menu)";
 
 
 
@@ -1845,8 +1510,6 @@ backBtn.addEventListener('click', goBack);
 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') goBack(); });
 document.addEventListener('keydown', (e) => {
     if (isInputFocused()) return;
-    if (e.key === 'c') { snapCameraToCenter(); }
-    if (e.key === 'h') { e.preventDefault(); toggleUIs(); }
     if (e.key === ' ') { e.preventDefault(); openSearchBox(); }
 });
 
@@ -1876,14 +1539,10 @@ function enableZoom() {
 function toggleView({ content = false, focused = false, show = true } = {}) {
     if (content) {
         if (show) {
-            vizUI();
-
             vizAdd(contentView);
             vizAdd(backBtn);
 
-            vizRemove(hideBtn);
             vizRemove(centerBtn);
-            vizRemove(settingsBtn);
             menuStage.classList.add('blur');
             starfield?.classList.add('blur');
 
@@ -1896,8 +1555,6 @@ function toggleView({ content = false, focused = false, show = true } = {}) {
             vizRemove(contentView);
             vizRemove(backBtn);
 
-            vizAdd(hideBtn);
-            vizAdd(settingsBtn);
             updateCenterButtonVisibility();
             menuStage.classList.remove('blur');
             starfield?.classList.remove('blur');

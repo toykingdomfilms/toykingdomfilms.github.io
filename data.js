@@ -1,7 +1,7 @@
 /* -------------------------- WEBSITE MENU DATA -------------------------- */
 
 // Metadata
-const lastUpdated = '2026-2-15';
+const lastUpdated = '2026-2-17';
 const version = '1.3.0';
 
 
@@ -67,9 +67,9 @@ orbitData = [
 // reference: string        - if set as the only attribute, this card copies another card (menuId:cardId)
 // isCharacter: bool        - if set, this is a character card
 // cSpecies: string         - the character species. optional
-// cPronouns: string        - the character pronouns. optional
+// cAge: string             - the character age. optional
 // cGender: string          - the character gender. optional
-// cSexuality: string       - the character sexuality. optional
+// cBirthday: string        - the character birthday. optional
 // cNicknames: string       - the character nicknames. optional
 // cAddOns: string          - extra HTML put above the reference art of the character. optional
 // cReference: string       - path to the character reference art. optional
@@ -86,7 +86,6 @@ menuItems = [
         color: 'var(--color-6)',
         scale: 1,
         hidden: true,
-        invisible: true,
         labels: [
             {
                 cardId: 'info',
@@ -182,6 +181,126 @@ menuItems = [
         labels: [
                 ], 
     },
+    {   // Crochet Collection
+        orbit: 1,
+        menuId: 'Collection',
+        title: 'Collection',
+        subtitle: '',
+        image: 'images/temp2.png',
+        color: 'var(--color-1)',
+        scale: 1,
+        hidden: true,
+        labels: [
+            {
+                cardId: 'info',
+                title: 'Info',
+                subtitle: 'About Collection',
+                detail: `
+                        <h2>Trivia</h2>
+                        <ul>
+                            <li>Cutetuzi is a symbol of the word famous, known to her bow.</li>
+                            <li>TOTS babies did not play before. Babies just bring toys and that made them buy toys.</li>
+                        </ul>
+                `,
+                banner: true,
+                image: 'images/temp2.png'
+            },
+            { title: 'Animals' },
+            { linkId: 'puppyplanet' },
+            { linkId: 'cats' },
+            { linkId: 'fruityfrogs' },
+            { linkId: 'fish' },
+            { title: 'Food' },
+            { linkId: 'fruitcubes' },
+            { title: 'Vehicles' },
+            { linkId: 'coffeecars' },
+            { linkId: 'racecars' },
+                ], 
+    },
+    {
+        title: 'Puppy Planet',
+        menuId: 'puppyplanet',
+        subtitle: '',
+        image: 'images/nansenz-thingamaland.png',
+        color: 'var(--color-6)',
+        hidden: true,
+        invisible: true,
+        parent: 'collection',
+        labels: [
+                ], 
+    },
+    {
+        title: 'Cats',
+        menuId: 'cats',
+        subtitle: '',
+        image: 'images/nansenz-thingamaland.png',
+        color: 'var(--color-6)',
+        hidden: true,
+        invisible: true,
+        parent: 'collection',
+        labels: [
+                ], 
+    },
+    {
+        title: 'Fruity Frogs',
+        menuId: 'fruityfrogs',
+        subtitle: '',
+        image: 'images/nansenz-thingamaland.png',
+        color: 'var(--color-6)',
+        hidden: true,
+        invisible: true,
+        parent: 'collection',
+        labels: [
+                ], 
+    },
+    {
+        title: 'Fish',
+        menuId: 'fish',
+        subtitle: '',
+        image: 'images/nansenz-thingamaland.png',
+        color: 'var(--color-6)',
+        hidden: true,
+        invisible: true,
+        parent: 'collection',
+        labels: [
+                ], 
+    },
+    {
+        title: 'Fruit Cubes',
+        menuId: 'fruitcubes',
+        subtitle: '',
+        image: 'images/nansenz-thingamaland.png',
+        color: 'var(--color-6)',
+        hidden: true,
+        invisible: true,
+        parent: 'collection',
+        labels: [
+                ], 
+    },
+    {
+        title: 'Coffee Cars',
+        menuId: 'coffeecars',
+        subtitle: '',
+        image: 'images/nansenz-thingamaland.png',
+        color: 'var(--color-6)',
+        hidden: true,
+        invisible: true,
+        parent: 'collection',
+        labels: [
+                ], 
+    },
+    {
+        title: 'Race Cars',
+        menuId: 'racecars',
+        subtitle: '',
+        image: 'images/nansenz-thingamaland.png',
+        color: 'var(--color-6)',
+        hidden: true,
+        invisible: true,
+        parent: 'collection',
+        labels: [
+                ], 
+    },
     {   //SGF
         orbit: 1,
         menuId: 'supergoldenflash',
@@ -228,6 +347,62 @@ menuItems = [
                 subtitle: ''
             },
             { reference: 'blog:452023' },
+            {
+                cardId: 'thinkingMonkey',
+                title: 'Thinking Monkey',
+                subtitle: '',
+
+                isCharacter: true, 
+                cSpecies: 'Monkey',
+                cAge: 'unknown',
+                cGender: 'male',
+                cBirthday: 'mm/dd/yyyy',
+                cNicknames: '',
+                cAddOns: `Source: <a href="https://knowyourmeme.com/memes/thinking-monkey">knowyourmeme.com</a>`,
+                cReference: 'images/r/thinking-monkey-r.jpg',
+                cGallery: [
+                   'images/r/thinking-monkey-r.jpg',
+                   'images/r/thinking-monkey-r.jpg',
+                   'images/r/thinking-monkey-r.jpg',
+                   'images/r/thinking-monkey-r.jpg',
+                   'images/r/thinking-monkey-r.jpg',
+                   'images/r/thinking-monkey-r.jpg',
+                    ],
+                detail: `
+                    <span style="border-left: 6px solid var(--white); padding-right: 8px"></span><span> The only limit to our realization of tomorrow is our doubts of today.</span><br> 
+                    <span style="border-left: 6px solid var(--white); padding-right: 8px"></span>— person <br><br>
+                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
+                    <h2>Appearance</h2>
+                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
+                    <h4>Design Notes</h4>
+                    <ul>
+                    <li>test note lalalalallalalalalalaaaaa</li>
+                    <li>test note lalalalallalalalalalaaaaa</li>
+                    <li>test note lalalalallalalalalalaaaaa</li>
+                    </ul> 
+                    <hr> 
+                    <h2>Personality</h2>
+                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
+                    <hr> 
+                    <h2>History</h2>
+                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020. <br><br>
+                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
+                    <hr>
+                    <h2>Abilities</h2>
+                    <b>Thinking Monkey</b> - is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
+                    <hr> 
+                    <h2>Relationships</h2> 
+                    <a data-open-card="thinkingmonkey">Thinking Monkey</a> - is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
+                    <hr> 
+                    <h2>Trivia</h2>
+                    <ul>
+                    <li>test trivia lalalalallalalalalalaaaaa</li>
+                    <li>test trivia lalalalallalalalalalaaaaa</li>
+                    <li>test trivia lalalalallalalalalalaaaaa</li>
+                    </ul> 
+                    `,
+                image: 'images/i/thinking-monkey-i.jpg'
+            },
         ]
     },
     {
@@ -336,7 +511,6 @@ menuItems = [
         color: 'var(--color-7)',
         scale: 1,
         hidden: true,
-        invisible: true,
         labels: [
             {
                 cardId: 'info',
@@ -347,12 +521,25 @@ menuItems = [
                 image: 'icons/car-side.png'
             },
             { linkId: 'innova-protagonists' },
+            { linkId: 'innova-Rlabs' },
             { linkId: 'innova-antagonists' },
         ]
     },
     {
         title: 'Protagonists',
         menuId: 'innova-protagonists',
+        subtitle: '',
+        image: 'images/nansenz-thingamaland.png',
+        color: 'var(--color-7)',
+        hidden: true,
+        invisible: true,
+        parent: 'innovaa',
+        labels: [
+                ], 
+    },
+    { 
+        title: 'R Labs',
+        menuId: 'innova-Rlabs',
         subtitle: '',
         image: 'images/nansenz-thingamaland.png',
         color: 'var(--color-7)',
@@ -383,7 +570,6 @@ menuItems = [
         color: 'var(--color-8)',
         scale: 1,
         hidden: true,
-        invisible: true,
         labels: [
             {
                 cardId: 'info',
@@ -430,7 +616,6 @@ menuItems = [
         color: 'var(--color-4)',
         scale: 1,
         hidden: true,
-        invisible: true,
         labels: [
             {
                 cardId: 'info',
@@ -475,7 +660,6 @@ menuItems = [
         title: 'Blog',
         menuId: 'blog',
         subtitle: 'archive',
-        showTitle: true,
         image: 'icons/blog.png',
         color: 'var(--color-3)',
         scale: 1.5,
@@ -493,6 +677,27 @@ menuItems = [
                     <a href="https://github.com/blurplebun/omniversetemp.github.io" target="_blank">Code by Artifyber</a>
                         `,
                 unclickable: true,
+            },
+            {
+                cardId: 'todolist',
+                title: 'To do List',
+                subtitle: `By Admin  • 2026-2-17 <br>Updated: 2026-2-17`,
+                detail: `
+                    <h2>High priority</h2>
+                    <ul>
+                        <li>Add all character info</li>
+                        <li>Apply changes from the 1.0.0 update</li>
+                    </ul>
+                    <h2>Mid priority</h2>
+                    <ul>
+                        <li>Nothing here</li>
+                    </ul>
+                    <h2>Low priority</h2>
+                    <ul>
+                        <li>Add random generators</li>
+                        <li>Make a homepage</li>
+                    </ul>
+                        `,
             },
             {
                 cardId: '2222023',
@@ -560,239 +765,10 @@ menuItems = [
         orbit: 3,
         title: 'Random Character',
         menuId: 'random',
-        showTitle: true,
         image: 'icons/random.png',
         color: 'var(--color-2)',
         scale: 1.5,
         labels: [],
-    },
-/* ---------------------------------------------------- Templates ---------------------------------------------------- */
-
-    {   /* -------------------------- Menu Template -------------------------- */
-        // you might want to keep this template to help you create more cards for your website.
-        // once you're done, set both "hidden" and "invisible" to true to hide this card.
-
-        orbit: 3,                             // INTEGER: Orbit layer placement
-        menuId: 'menuTemplate',               // REQUIRED: Unique identifier (alphanumeric, no spaces). use anything EXCEPT 'index'
-        title: 'Menu Template',                // Menu name and title
-        showTitle: true,                      // Show title in orbit
-        subtitle: 'This is a menu example',   // Short description
-        image: 'images/temp2.png',            // Orbit thumbnail image
-        color: 'var(--color-1)',              // Menu color (hex, CSS var, or blank)
-        scale: 1,                             // Menu size in orbit
-        hidden: false,                        // if true: Hide from orbit (accessible via links only)
-        invisible: true,                     // if true: Exclude from search
-        labels: [
-            // CARDS WITH THUMBNAILS
-            {   // Cards without cardId become separators
-                title: 'Card examples',
-                subtitle: 'Main card types to put your content in',
-            },
-            {
-                cardId: 'normalCard',         // REQUIRED: Unique card identifier
-                title: 'Normal Card',
-                subtitle: 'With thumbnail',
-                detail: 'This is a template for a normal card.<br>You can fill these with whatever you want in raw HTML.',
-                image: 'images/temp.png'        // Thumbnail will be shown in 1:1 aspect ratio
-            },
-            {
-                cardId: 'urlCard',
-                title: 'URL Card',
-                subtitle: 'With thumbnail',
-                url: 'https://x.com/artifyber',  // External URL redirect
-                image: 'images/temp.png'
-            },
-            {
-                cardId: 'unclickableCard',
-                title: 'Unclickable Card',
-                subtitle: 'With thumbnail',
-                unclickable: true,            // Non-clickable info card
-                image: 'images/temp.png'
-            },
-
-            // CARDS WITHOUT TEXT
-            {
-                cardId: 'normalCardBlank',
-                blank: true,    // set the card as blank / have no text
-                subtitle: 'Without text',
-                detail: 'This is a template for a normal card.<br>You can fill these with whatever you want in raw HTML.',
-                image: 'images/temp.png'        // Thumbnail will be shown in 4:5 aspect ratio
-            },
-            {
-                cardId: 'urlCardBlank',
-                blank: true,
-                url: 'https://x.com/artifyber',
-                image: 'images/temp.png'
-            },
-            {
-                cardId: 'unclickableCardBlank',
-                blank: true,
-                unclickable: true,
-                image: 'images/temp.png',
-            },
-
-            // CARDS WITHOUT THUMBNAILS
-            {
-                cardId: 'normalCardPlain',
-                title: 'Normal Card',
-                subtitle: 'Without thumbnail',
-                detail: 'This is a template for a normal card.<br>You can fill these with whatever you want in raw HTML.'
-            },
-            {
-                cardId: 'urlCardPlain',
-                title: 'URL Card',
-                subtitle: 'Without thumbnail',
-                url: 'https://x.com/artifyber'
-            },
-            {
-                cardId: 'unclickableCardPlain',
-                title: 'Unclickable Card',
-                subtitle: 'Without thumbnail',
-                unclickable: true
-            },
-
-            // BANNER CARDS
-            {   // Cards without cardId become separators
-                title: 'Banner examples',
-                subtitle: 'Useful for describing a section of card grid',
-            },
-            {
-                cardId: 'bannerCard',
-                title: 'Banner Card',
-                subtitle: 'A type of card that spans the entire width of the container',
-                detail: 'This is a template for a normal card.<br>You can fill these with whatever you want in raw HTML.',
-                banner: true,
-                image: 'images/temp3.png'
-            },
-            {
-                cardId: 'bannerUrlCard',
-                title: 'Banner Card (URL)',
-                subtitle: 'A type of card that spans the entire width of the container',
-                banner: true,
-                url: 'https://x.com/artifyber',
-                image: 'images/temp3.png'
-            },
-            {
-                cardId: 'bannerUnclickableCard',
-                title: 'Banner Card (Unclickable)',
-                subtitle: 'A type of card that spans the entire width of the container',
-                banner: true,
-                unclickable: true,
-                image: 'images/temp3.png'
-            },
-            {
-                cardId: 'bannerCardBlank',
-                title: 'Banner Card - No Thumbnail',
-                subtitle: 'A type of card that spans the entire width of the container',
-                detail: 'This is a template for a normal card.<br>You can fill these with whatever you want in raw HTML.',
-                banner: true,
-            },
-            {
-                cardId: 'bannerUrlCardBlank',
-                title: 'Banner Card - No Thumbnail (URL)',
-                subtitle: 'A type of card that spans the entire width of the container',
-                banner: true,
-                url: 'https://x.com/artifyber',
-            },
-            {
-                cardId: 'bannerUnclickableCardBlank',
-                title: 'Banner Card - No Thumbnail (Unclickable)',
-                subtitle: 'A type of card that spans the entire width of the container',
-                banner: true,
-                unclickable: true,
-            },
-
-            // MENU-LINKED CARDS
-            {
-                title: 'Menu-Link examples',
-                subtitle: 'Cards that open another menu',
-            },
-            { linkId: 'blog' },
-            {
-                linkId: 'blog',
-                banner: true
-            },
-
-            // REFERENCES
-            {
-                title: 'Reference examples',
-                subtitle: 'A way to copy cards from another menu. Useful for pinning!',
-            },
-            { reference: 'blog:webinfo' },
-        ]
-    },
-    {   /* -------------------------- Menu Template -------------------------- */
-        // you might want to keep this template to help you create more cards for your website.
-        // once you're done, set both "hidden" and "invisible" to true to hide this card.
-
-        orbit: 3,
-        menuId: 'ocTemplate',
-        title: 'Character Template',
-        showTitle: true,
-        subtitle: 'This is a character menu example',
-        image: 'images/temp2.png',
-        color: 'var(--color-4)',
-        scale: 1,
-        hidden: false,
-        invisible: true,
-        labels: [
-            {
-                cardId: 'thinkingMonkey',
-                title: 'Thinking Monkey',
-                subtitle: '',
-
-                isCharacter: true, 
-                cSpecies: 'Monkey',
-                cAge: 'unknown',
-                cGender: 'male',
-                cBirthday: 'mm/dd/yyyy',
-                cNicknames: '',
-                cAddOns: `Source: <a href="https://knowyourmeme.com/memes/thinking-monkey">knowyourmeme.com</a>`,
-                cReference: 'images/r/thinking-monkey-r.jpg',
-                cGallery: [
-                   'images/r/thinking-monkey-r.jpg',
-                   'images/r/thinking-monkey-r.jpg',
-                   'images/r/thinking-monkey-r.jpg',
-                   'images/r/thinking-monkey-r.jpg',
-                   'images/r/thinking-monkey-r.jpg',
-                   'images/r/thinking-monkey-r.jpg',
-                    ],
-                detail: `
-                    <span style="border-left: 6px solid var(--white); padding-right: 8px"></span><span> The only limit to our realization of tomorrow is our doubts of today.</span><br> 
-                    <span style="border-left: 6px solid var(--white); padding-right: 8px"></span>— person <br><br>
-                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
-                    <h2>Appearance</h2>
-                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
-                    <h4>Design Notes</h4>
-                    <ul>
-                    <li>test note lalalalallalalalalalaaaaa</li>
-                    <li>test note lalalalallalalalalalaaaaa</li>
-                    <li>test note lalalalallalalalalalaaaaa</li>
-                    </ul> 
-                    <hr> 
-                    <h2>Personality</h2>
-                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
-                    <hr> 
-                    <h2>History</h2>
-                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020. <br><br>
-                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
-                    <hr>
-                    <h2>Abilities</h2>
-                    <b>Thinking Monkey</b> - is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
-                    <hr> 
-                    <h2>Relationships</h2> 
-                    <a data-open-card="thinkingmonkey">Thinking Monkey</a> - is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
-                    <hr> 
-                    <h2>Trivia</h2>
-                    <ul>
-                    <li>test trivia lalalalallalalalalalaaaaa</li>
-                    <li>test trivia lalalalallalalalalalaaaaa</li>
-                    <li>test trivia lalalalallalalalalalaaaaa</li>
-                    </ul> 
-                    `,
-                image: 'images/i/thinking-monkey-i.jpg'
-            }
-        ]
     },
 ];
 
@@ -802,8 +778,6 @@ menuItems = [
 
 
 // Special search responses
-
-// Try typing these special keywords on the search bar!
 specialSearch = {};
 
 
