@@ -1,8 +1,8 @@
 /* -------------------------- WEBSITE MENU DATA -------------------------- */
 
 // Metadata
-const lastUpdated = '2026-2-17';
-const version = '1.3.0';
+const lastUpdated = '2026-2-20';
+const version = '1.0.0';
 
 
 
@@ -25,11 +25,16 @@ const version = '1.3.0';
 orbitData = [
     {
         orbit: 1,
-        title: "Getting Started",
-        desc: "New here?",
+        title: "Characters",
+        desc: "Character collections",
     },
     {
-        orbit: 3,
+        orbit: 2,
+        title: "The World",
+        desc: "Worldbuilding",
+    },
+    {
+        orbit: 4,
         title: "Others",
         desc: "Miscellanous",
     },
@@ -113,10 +118,9 @@ menuItems = [
         title: 'Main',
         menuId: 'tots-main',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-6)',
         hidden: true,
-        invisible: true,
         parent: 'trippytots',
         labels: [
                 ], 
@@ -125,10 +129,9 @@ menuItems = [
         title: 'Kids',
         menuId: 'tots-kids',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-6)',
         hidden: true,
-        invisible: true,
         parent: 'trippytots',
         labels: [
                 ], 
@@ -137,10 +140,9 @@ menuItems = [
         title: 'Classmates',
         menuId: 'tots-classmates',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-6)',
         hidden: true,
-        invisible: true,
         parent: 'trippytots',
         labels: [
                 ], 
@@ -149,10 +151,9 @@ menuItems = [
         title: 'Employees',
         menuId: 'tots-employees',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-6)',
         hidden: true,
-        invisible: true,
         parent: 'trippytots',
         labels: [
                 ], 
@@ -161,10 +162,9 @@ menuItems = [
         title: 'Miscellanous',
         menuId: 'tots-misc',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-6)',
         hidden: true,
-        invisible: true,
         parent: 'trippytots',
         labels: [
                 ], 
@@ -173,34 +173,28 @@ menuItems = [
         title: 'Antagonists',
         menuId: 'tots-antagonists',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-6)',
         hidden: true,
-        invisible: true,
         parent: 'trippytots',
         labels: [
                 ], 
     },
-    {   // Crochet Collection
+     {   // Crochet Collection
         orbit: 1,
-        menuId: 'Collection',
+        menuId: 'collection',
         title: 'Collection',
         subtitle: '',
         image: 'images/temp2.png',
         color: 'var(--color-1)',
         scale: 1,
-        hidden: true,
         labels: [
             {
                 cardId: 'info',
                 title: 'Info',
                 subtitle: 'About Collection',
                 detail: `
-                        <h2>Trivia</h2>
-                        <ul>
-                            <li>Cutetuzi is a symbol of the word famous, known to her bow.</li>
-                            <li>TOTS babies did not play before. Babies just bring toys and that made them buy toys.</li>
-                        </ul>
+                    This is a template for a normal card.<br>You can fill these with whatever you want in raw HTML.
                 `,
                 banner: true,
                 image: 'images/temp2.png'
@@ -209,11 +203,10 @@ menuItems = [
             { linkId: 'puppyplanet' },
             { linkId: 'cats' },
             { linkId: 'fruityfrogs' },
-            { linkId: 'fish' },
             { title: 'Food' },
             { linkId: 'fruitcubes' },
             { title: 'Vehicles' },
-            { linkId: 'coffeecars' },
+            { linkId: 'cafecars' },
             { linkId: 'racecars' },
                 ], 
     },
@@ -221,10 +214,9 @@ menuItems = [
         title: 'Puppy Planet',
         menuId: 'puppyplanet',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
-        color: 'var(--color-6)',
+        image: 'images/temp2.png',
+        color: 'var(--color-11)',
         hidden: true,
-        invisible: true,
         parent: 'collection',
         labels: [
                 ], 
@@ -233,10 +225,9 @@ menuItems = [
         title: 'Cats',
         menuId: 'cats',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-6)',
         hidden: true,
-        invisible: true,
         parent: 'collection',
         labels: [
                 ], 
@@ -245,22 +236,9 @@ menuItems = [
         title: 'Fruity Frogs',
         menuId: 'fruityfrogs',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
-        color: 'var(--color-6)',
+        image: 'images/temp2.png',
+        color: 'var(--color-12)',
         hidden: true,
-        invisible: true,
-        parent: 'collection',
-        labels: [
-                ], 
-    },
-    {
-        title: 'Fish',
-        menuId: 'fish',
-        subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
-        color: 'var(--color-6)',
-        hidden: true,
-        invisible: true,
         parent: 'collection',
         labels: [
                 ], 
@@ -269,22 +247,20 @@ menuItems = [
         title: 'Fruit Cubes',
         menuId: 'fruitcubes',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
-        color: 'var(--color-6)',
+        image: 'images/temp2.png',
+        color: 'var(--color-14)',
         hidden: true,
-        invisible: true,
         parent: 'collection',
         labels: [
                 ], 
     },
     {
-        title: 'Coffee Cars',
-        menuId: 'coffeecars',
+        title: 'Café Cars',
+        menuId: 'cafecars',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
-        color: 'var(--color-6)',
+        image: 'images/temp2.png',
+        color: 'var(--color-13)',
         hidden: true,
-        invisible: true,
         parent: 'collection',
         labels: [
                 ], 
@@ -293,10 +269,9 @@ menuItems = [
         title: 'Race Cars',
         menuId: 'racecars',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
-        color: 'var(--color-6)',
+        image: 'images/temp2.png',
+        color: 'var(--color-4)',
         hidden: true,
-        invisible: true,
         parent: 'collection',
         labels: [
                 ], 
@@ -391,9 +366,6 @@ menuItems = [
                     <h2>Abilities</h2>
                     <b>Thinking Monkey</b> - is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
                     <hr> 
-                    <h2>Relationships</h2> 
-                    <a data-open-card="thinkingmonkey">Thinking Monkey</a> - is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
-                    <hr> 
                     <h2>Trivia</h2>
                     <ul>
                     <li>test trivia lalalalallalalalalalaaaaa</li>
@@ -401,6 +373,18 @@ menuItems = [
                     <li>test trivia lalalalallalalalalalaaaaa</li>
                     </ul> 
                     `,
+                cPositive: [
+                    {
+                        cardId: 'supergoldenflash:thinkingMonkey',
+                        relation: 'caption'
+                    },
+                ],
+                cNegative: [
+                    {
+                        cardId: 'supergoldenflash:thinkingMonkey',
+                        relation: 'caption'
+                    },
+                ],
                 image: 'images/i/thinking-monkey-i.jpg'
             },
         ]
@@ -409,7 +393,7 @@ menuItems = [
         title: '1',
         menuId: 'sgf1',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-8)',
         hidden: true,
         parent: 'supergoldenflash',
@@ -421,7 +405,7 @@ menuItems = [
         title: '2',
         menuId: 'sgf2',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-8)',
         hidden: true,
         parent: 'supergoldenflash',
@@ -433,7 +417,7 @@ menuItems = [
         title: '3',
         menuId: 'sgf3',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-8)',
         hidden: true,
         parent: 'supergoldenflash',
@@ -445,7 +429,7 @@ menuItems = [
         title: '4',
         menuId: 'sgf4',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-8)',
         hidden: true,
         parent: 'supergoldenflash',
@@ -457,7 +441,7 @@ menuItems = [
         title: '1',
         menuId: 'helpers1',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-9)',
         hidden: true,
         parent: 'supergoldenflash',
@@ -469,7 +453,7 @@ menuItems = [
         title: '2',
         menuId: 'helpers2',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-9)',
         hidden: true,
         parent: 'supergoldenflash',
@@ -481,7 +465,7 @@ menuItems = [
         title: '3',
         menuId: 'helpers3',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-9)',
         hidden: true,
         parent: 'supergoldenflash',
@@ -493,10 +477,9 @@ menuItems = [
         title: 'Antagonists',
         menuId: 'sgf-antagonists',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-8)',
         hidden: true,
-        invisible: true,
         parent: 'supergoldenflash',
         labels: [
                 
@@ -529,10 +512,9 @@ menuItems = [
         title: 'Protagonists',
         menuId: 'innova-protagonists',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-7)',
         hidden: true,
-        invisible: true,
         parent: 'innovaa',
         labels: [
                 ], 
@@ -541,10 +523,9 @@ menuItems = [
         title: 'R Labs',
         menuId: 'innova-Rlabs',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-7)',
         hidden: true,
-        invisible: true,
         parent: 'innovaa',
         labels: [
                 ], 
@@ -553,10 +534,9 @@ menuItems = [
         title: 'Antagonists',
         menuId: 'innova-antagonists',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-7)',
         hidden: true,
-        invisible: true,
         parent: 'innovaa',
         labels: [
                 ], 
@@ -587,10 +567,9 @@ menuItems = [
         title: 'Protagonists',
         menuId: 'benjamin-protagonists',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-8)',
         hidden: true,
-        invisible: true,
         parent: 'benjaminn',
         labels: [
                 ], 
@@ -599,10 +578,9 @@ menuItems = [
         title: 'Antagonists',
         menuId: 'benjamin-antagonists',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-8)',
         hidden: true,
-        invisible: true,
         parent: 'benjaminn',
         labels: [
                 ], 
@@ -633,10 +611,9 @@ menuItems = [
         title: 'Space2Go',
         menuId: 'space2go',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-3)',
         hidden: true,
-        invisible: true,
         parent: 'filmykingdom',
         labels: [
                 ], 
@@ -645,18 +622,51 @@ menuItems = [
         title: 'Kingdom Unite',
         menuId: 'kingdomunite',
         subtitle: '',
-        image: 'images/nansenz-thingamaland.png',
+        image: 'images/temp2.png',
         color: 'var(--color-5)',
         hidden: true,
-        invisible: true,
         parent: 'filmykingdom',
+        labels: [
+                ], 
+    },
+    // Orbit 2
+    {   // Companies
+        orbit: 2,
+        menuId: 'companies',
+        title: 'Companies',
+        subtitle: '',
+        image: 'images/temp2.png',
+        color: 'var(--color-10)',
+        scale: 1,
+        labels: [
+            {
+                cardId: 'info',
+                title: 'Info',
+                subtitle: 'About Companies',
+                detail: `
+                    This is a template for a normal card.<br>You can fill these with whatever you want in raw HTML.
+                `,
+                banner: true,
+                image: 'images/temp2.png'
+            },
+            { linkId: 'kinetics' },
+                ], 
+    },
+    {
+        title: 'Kinetics',
+        menuId: 'kinetics',
+        subtitle: '',
+        image: 'images/temp2.png',
+        color: 'var(--color-15)',
+        hidden: true,
+        parent: 'companies',
         labels: [
                 ], 
     },
 
     // Orbit 3
     {   // Blog
-        orbit: 3,
+        orbit: 4,
         title: 'Blog',
         menuId: 'blog',
         subtitle: 'archive',
@@ -762,7 +772,7 @@ menuItems = [
         ]
     },
     {   // Random
-        orbit: 3,
+        orbit: 4,
         title: 'Random Character',
         menuId: 'random',
         image: 'icons/random.png',
@@ -778,7 +788,7 @@ menuItems = [
 
 
 // Special search responses
-specialSearch = {};
+specialSearch = [];
 
 
 

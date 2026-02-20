@@ -10,7 +10,6 @@
 
 // !! REPLACE WITH YOUR ACTUAL WEBSITE DOMAIN !!
 const DOMAIN = 'https://toykingdomfilms.github.io';
-
 const fs = require("fs");
 const path = require("path");
 const { menuItems } = require("./data.js");
@@ -37,7 +36,6 @@ function buildHTML({ title, desc, image, url, twitterType = "summary" }) {
 <html>
     <head>
         <meta charset="utf-8">
-
         <meta name="theme-color" content="#4b5499">
         <meta property="og:type" content="website">
         <meta property="og:site_name" content="ToykingdomFilms">
@@ -45,13 +43,11 @@ function buildHTML({ title, desc, image, url, twitterType = "summary" }) {
         <meta property="og:description" content="${esc(desc)}">
         <meta property="og:image" content="${DOMAIN}/${esc(image)}">
         <meta property="og:url" content="${esc(url)}">
-
         <meta name="twitter:card" content="${twitterType}">
         <meta name="twitter:title" content="${esc(title)}">
         <meta name="twitter:description" content="${esc(desc)}">
         <meta name="twitter:image" content="${DOMAIN}/${esc(image)}">
     </head>
-
     <body>
         <script>
             location.href = "${esc(url)}";
@@ -72,7 +68,7 @@ menuItems.forEach(menu => {
     if (!fs.existsSync(menuFolder)) fs.mkdirSync(menuFolder);
 
     const menuHTML = buildHTML({
-        title: menu.name || menuId,
+        title: menu.title || menuId,
         desc: menu.subtitle || "View menu",
         image: menu.image || "",
         url: `/?m=${menuId}`
@@ -94,7 +90,7 @@ menuItems.forEach(menu => {
             const chosenImage = pickCardImage(label, menu);
 
             // CHARACTER DESCRIPTION
-            let desc = label.excerpt || "View card";
+            let desc = label.subtitle || "View card";
             if (label.isCharacter) {
                 const cSpecies = label.cSpecies ? `Species: ${label.cSpecies}\n` : '';
                 const cAge = label.cAge ? `Age: ${label.cAge}\n` : '';
@@ -123,6 +119,5 @@ menuItems.forEach(menu => {
         });
     }
 });
-
 
 console.log("\nAll embed pages generated in /e/");
