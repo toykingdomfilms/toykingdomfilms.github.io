@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <meta charset="UTF-8">
 <link rel="icon" type="image" href="icons/fav-icon.png">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" id="vp">
@@ -12,20 +12,56 @@
 </html>
 
 <body>
+
     <!-- App -->
     <div class="app">
-        <div class="starfield"></div>
-        <div class="menu-stage">
-            <div class="menu-center-text">
-                <div class="splash-text splash-text-info" data-info="info" data-infodesc="toykingdomfilms.com"></div>
-                <img class="menu-logo" src="images/menu-logo.png" draggable="false"
-                    title="menu logo" /><br>
-                <div class="splash-text" data-info="splash"></div>
+        <div id="loading">loading assets...</div>
+        <!-- Starfield -->
+        <div id="starfield"></div>
+
+        <!-- Main menu -->
+        <div id="mainMenu">
+
+            <!-- Main menu center (logo, splash, text) -->
+            <div id="mainMenuCenter" class="main-menu-center">
+                <img id="mainMenuLogo" class="logo" src="images/menu-logo.png" draggable="false">
+                <div class="logo-text">
+                    <div class="splash"></div>
+                    <div class="info">toykingdomfilms.com</div>
+                </div>
+                
             </div>
-            <div class="ring">
-                <!-- buttons injected here -->
-            </div>
+
+            <!-- Main menu ring -->
+            <div id="menuRing" class="menu-ring"></div>
         </div>
+
+        <br>
+
+        <!-- Content viewer -->
+        <div id="contentView" class="content-view hidden">
+            <div id="contentViewHeader" class="content-view-header">
+                <div id="contentViewTitle" class="content-view-title">Menu Title</div>
+                <div id="contentViewSubtitle" class="content-view-subtitle">Menu Description</div>
+                <hr>
+            </div>
+            <div id="contentViewGrid" class="content-view-grid"></div>
+        </div>
+
+        <br>
+
+        <!-- Detail viewer -->
+        <div id="detailView" class="detail-view hidden">
+            <div id="detailViewHeader" class="detail-view-header"></div>
+            <div id="detailViewContent" class="detail-view-content">Card Content</div>
+        </div>
+
+        <br>
+
+        <!-- Image preview overlay -->
+        <div id="imageView" class="image-view hidden"></div>
+
+        <br>
 
         <dialog id="searchBox">
             <form method="dialog" id="searchForm">
@@ -38,79 +74,51 @@
             </form>
         </dialog>
 
-        <div id="expander" class="expander" style="opacity:0"></div>
+        <!-- Interface -->
+        <div id="UIPanelTop">
 
-        <!-- content view area (single page) -->
-        <div id="contentView" class="content-view" aria-hidden="true">
-            <div class="content-header">
-                <div class="content-title" id="contentTitle">Menu Title</div>
-                <div class="content-sub" id="contentSubtitle">Subtitle / description</div>
-                <hr>
-            </div>
-
-            <!-- <div id="cardsContainer" class="cards-grid max-cols-5" data-max="5"> -->
-            <div id="cardsContainer" class="max-cols-5" data-max="5">
-                <!-- cards injected here -->
-            </div>
-
-            <!-- focused layout (hidden until a card selected) -->
-            <div id="focusedLayout" class="focused-layout" style="display:none">
-                <div class="panel-left" id="focusedCardArea"></div>
-                <div class="panel-right" id="detailArea">
-                    <h3>Detail</h3>
-                    <p>Select a card to see details here.</p>
-                </div>
-            </div>
-        </div>
-
-        <div id="uiPanelTop">
-            
+            <!-- search button -->
             <button id="searchBtn" class="search-btn ui-btn visible" title="Search">
                 <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-width="2" d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-width="2"
+                            d="m21 21-3.5-3.5M17 10a7 7 0 1 1-14 0 7 7 0 0 1 14 0Z" />
                     </svg>
                 </span>
             </button>
 
             <button id="sortBtn" class="sort-btn ui-btn" title="Toggle sorting">
-                <span>Sort: Default</span>
+                <span>Default</span>
             </button>
 
         </div>
 
-        <div id="uiPanelBottom">
-            <span id="assetLoad" class="visible">Loading assets....</span>
-            <!-- center view button -->
-            <button id="centerBtn" class="center-btn ui-btn" title="Center camera">
-                <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-width="2" d="M4 8h4V4m12 4h-4V4M4 16h4v4m12-4h-4v4"/>
-                    </svg>
-                </span>
-            </button>
+        <div id="UIPanelBottom">
 
             <!-- reroll button -->
-            <button id="rerollBtn" class="reroll-btn ui-btn" title="Reroll character">
+            <button id="rerollBtn" class="reroll-btn ui-btn ui-hide" title="Reroll character">
                 <span>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-width="2" d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4"/>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none"
+                        viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M17.651 7.65a7.131 7.131 0 0 0-12.68 3.15M18.001 4v4h-4m-7.652 8.35a7.13 7.13 0 0 0 12.68-3.15M6 20v-4h4" />
                     </svg>
                 </span>
             </button>
 
             <!-- back button -->
-            <button id="backBtn" class="back-btn ui-btn" title="Back">
-                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor"><path stroke-width="3" d="M15 18l-6-6 6-6" /></svg>
+            <button id="backBtn" class="back-btn ui-btn ui-hide" title="Back">
+                <svg viewBox="0 0 20 20" fill="none" stroke="currentColor">
+                    <path stroke-width="3" stroke-linecap="round" stroke-linejoin="round" d="M15 18l-6-6 6-6" />
+                </svg>
                 <span>Back</span>
             </button>
-       
-       
+
         </div>
     </div>
 
     <script src="data.js"></script>
-    <script src="main.js"></script>
     <script src="splashtext.js"></script>
-
+    <script src="main.js"></script>
 </body>
