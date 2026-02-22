@@ -691,12 +691,11 @@ menuItems = [
             {
                 cardId: 'todolist',
                 title: 'To do List',
-                subtitle: `By Admin  • 2026-2-17 <br>Updated: 2026-2-17`,
+                subtitle: `By Admin  • 2026-2-17 <br>Updated: 2026-2-20`,
                 detail: `
                     <h2>High priority</h2>
                     <ul>
                         <li>Add all character info</li>
-                        <li>Apply changes from the 1.0.0 update</li>
                     </ul>
                     <h2>Mid priority</h2>
                     <ul>
@@ -706,6 +705,7 @@ menuItems = [
                     <ul>
                         <li>Add random generators</li>
                         <li>Make a homepage</li>
+                        <li>Make a list of crochet wips and the abillity to add new ones</li>
                     </ul>
                         `,
             },

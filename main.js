@@ -332,7 +332,7 @@ function openMainMenuButton(btn, m) {
     animateExpander();
     if (m.labels && m.labels.length == 1) {
         openSingle = true;
-        if (m.menuId === "random") { specialrandommenu(); return; }
+        if (m.menuId === "random") { openRandom(); setButtonViz(rerollBtn, true); return; }
         openCardById(m.menuId, m.labels[0].cardId);
         return;
     }
@@ -583,8 +583,6 @@ function openMenu(menu, m) {
 
 
 
-
-
 // ------ character randomizer -------
 
 // get all characters
@@ -622,10 +620,6 @@ function openRandom() {
 
 rerollBtn.addEventListener('click', () => { openRandom(); });
 
-function specialrandommenu() {
-    openRandom(); setButtonViz(rerollBtn, true); return;
-}
-
 
 
 // the behavior for clicking cards that link to other menus
@@ -649,7 +643,12 @@ function menuCardBehavior(card, c) {
 
     card.addEventListener('click', () => { 
         if (m) openMenuById(m.menuId); 
-        if (m.menuId === "random") { specialrandommenu(); return rerollBtn.click();}
+        if (m.menuId === "random") { openRandom(); setButtonViz(rerollBtn, true); return; }
+        if (m.labels && m.labels.length == 1) {
+        openSingle = true;
+        openCardById(m.menuId, m.labels[0].cardId);
+        return;
+    }
     });
     card.addEventListener('mouseover', () => card.style.backgroundColor = `color-mix(in srgb, ${m.color} 30%, transparent)`);
     card.addEventListener('mouseout', () => card.style.backgroundColor = `transparent`);
@@ -753,7 +752,7 @@ function setCardHTML(card, c, r = null) {
 
         if (!r.image) { html = `
             <div class="card-text full">
-                <div class="card-text-title">${r.title}</div>
+                <strong class="card-text-title">${r.title}</strong>
                 ${r.subtitle ? `<div class="card-text-excerpt">${r.subtitle}</div>` : ''}
             </div>
             `; card.dataset.textonly = "true"; }
@@ -788,7 +787,6 @@ function separatorBehavior(card, c) {
 
 // render the content grid from a menu data
 function renderContentGrid(m, sort = null) {
-
     contentView.scrollTop = 0;
     contentViewGrid.innerHTML = '';
 
@@ -800,7 +798,6 @@ function renderContentGrid(m, sort = null) {
     if (sort === 'asc' || sort === 'desc') {
         // Separate banner and non-banner cards
         const nonBannerCards = cardsToRender.filter(lbl => !lbl.banner);
-        const bannerCards = cardsToRender.filter(lbl => lbl.banner);
 
         // Sort only non-banner cards
         nonBannerCards.sort((a, b) => {
@@ -825,6 +822,7 @@ function renderContentGrid(m, sort = null) {
         const card = document.createElement('div');
         card.classList.add('card');
         card.dataset.id = c.cardId;
+
         card.dataset.gridIndex = i;
         cardArray.push(card);
         i++;
@@ -857,7 +855,6 @@ function renderContentGrid(m, sort = null) {
 
     animateCardFirstTime(cardArray);
     initLazyLoader(contentViewGrid);
-
 }
 
 // Update sort button text based on current mode
@@ -1399,6 +1396,7 @@ function goBack() {
     // was the card opened from single-card menu?
     if (openSingle) {
         openSingle = false;
+        setButtonViz(rerollBtn, false);
         returnToMainMenu();
         return;
     }
@@ -1549,7 +1547,6 @@ function resetLayoutTransition() {
 window.addEventListener('load', () => { setLayoutViz(loading, false); appLoaded = true; });
 
 // initialize everything
-if (!SIMPLE_MODE) createStarfield();
 initCardData();
 initLayoutViz();
 createStarfield();
