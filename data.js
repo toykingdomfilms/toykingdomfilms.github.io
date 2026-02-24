@@ -1,7 +1,7 @@
 /* -------------------------- WEBSITE MENU DATA -------------------------- */
 
 // Metadata
-const lastUpdated = '2026-2-20';
+const lastUpdated = '2026-2-24';
 const version = '1.0.0';
 
 
