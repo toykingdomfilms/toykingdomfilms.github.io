@@ -920,6 +920,13 @@ a[data-open-card] {
     font-family: 'Main', 'Ubuntu', verdana, sans-serif;
 }
 
+/* preview mode */
+.detail-view.preview-mode img {
+    cursor: auto;
+}
+
+
+
 
 
 

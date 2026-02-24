@@ -569,11 +569,11 @@ function openMenu(menu, m) {
     setButtonViz(sortBtn, true);
     menuIsOpen = true;
 
-    const title = m.title + copyLinkIcon;
+    const title = m.invisible ? m.title : m.title + copyLinkIcon;
     const subtitle = m.menuId.includes("nansenz") ? m.subtitle + `<div class="ticker-bar"><div class="ticker-text"></div></div>` : m.subtitle;
     contentViewTitle.innerHTML = title;
     contentViewSubtitle.innerHTML = subtitle || '';
-    copyLinkHandler(contentView, m.menuId);
+    if (!m.invisible) copyLinkHandler(contentView, m.menuId);
     setCurrentMenu(m.menuId);
 
 
