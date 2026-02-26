@@ -1,4 +1,6 @@
 /* -------------------------- WEBSITE MENU DATA -------------------------- */
+// only edit this file, it contains all the data of the website.
+// tip: press ctrl+f on your keyboard to navigate around easily!
 
 // Metadata
 const lastUpdated = '2026-2-24';
@@ -7,7 +9,7 @@ const version = '1.0.0';
 
 
 
-// Orbit data
+// Orbit data (categories)
 
 // You can assign each orbit a name and description here.
 // Currently only appear on SIMPLE_MODE
@@ -17,11 +19,6 @@ const version = '1.0.0';
 // title: string         - the title of this orbit
 // desc: string          - the description of this orbit
 // orbitNum: int         - the actual orbit layer which determine how far it is from the center. defaults to orbit
-// direction: float      - the direction of spin and how fast it is. x<0 is clockwise, x>0 is counterclockwise.
-// offsetX: int          - offsets the X position of this orbit by pixels
-// offsetY: int          - offsets the Y position of this orbit by pixels
-// scaleX: float         - scale this orbit by the X axis
-// scaleY: float         - scale this orbit by the Y axis
 orbitData = [
     {
         orbit: 1,
@@ -30,8 +27,8 @@ orbitData = [
     },
     {
         orbit: 2,
-        title: "The World",
-        desc: "Worldbuilding",
+        title: "World",
+        desc: "Worldbuilding lore",
     },
     {
         orbit: 4,
@@ -236,7 +233,7 @@ menuItems = [
         title: 'Fruity Frogs',
         menuId: 'fruityfrogs',
         subtitle: '',
-        image: 'images/temp2.png',
+        image: 'icons/frog.png',
         color: 'var(--color-12)',
         hidden: true,
         parent: 'collection',
@@ -258,7 +255,7 @@ menuItems = [
         title: 'Café Cars',
         menuId: 'cafecars',
         subtitle: '',
-        image: 'images/temp2.png',
+        image: 'icons/coffee.png',
         color: 'var(--color-13)',
         hidden: true,
         parent: 'collection',
@@ -269,7 +266,7 @@ menuItems = [
         title: 'Race Cars',
         menuId: 'racecars',
         subtitle: '',
-        image: 'images/temp2.png',
+        image: 'icons/race-flag.png',
         color: 'var(--color-4)',
         hidden: true,
         parent: 'collection',
@@ -322,78 +319,13 @@ menuItems = [
                 subtitle: ''
             },
             { reference: 'blog:452023' },
-            {
-                cardId: 'thinkingMonkey',
-                title: 'Thinking Monkey',
-                subtitle: '',
-
-                isCharacter: true, 
-                cSpecies: 'Monkey',
-                cAge: 'unknown',
-                cGender: 'male',
-                cBirthday: 'mm/dd/yyyy',
-                cNicknames: '',
-                cAddOns: `Source: <a href="https://knowyourmeme.com/memes/thinking-monkey">knowyourmeme.com</a>`,
-                cReference: 'images/r/thinking-monkey-r.jpg',
-                cGallery: [
-                   'images/r/thinking-monkey-r.jpg',
-                   'images/r/thinking-monkey-r.jpg',
-                   'images/r/thinking-monkey-r.jpg',
-                   'images/r/thinking-monkey-r.jpg',
-                   'images/r/thinking-monkey-r.jpg',
-                   'images/r/thinking-monkey-r.jpg',
-                    ],
-                detail: `
-                    <span style="border-left: 6px solid var(--white); padding-right: 8px"></span><span> The only limit to our realization of tomorrow is our doubts of today.</span><br> 
-                    <span style="border-left: 6px solid var(--white); padding-right: 8px"></span>— person <br><br>
-                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
-                    <h2>Appearance</h2>
-                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
-                    <h4>Design Notes</h4>
-                    <ul>
-                    <li>test note lalalalallalalalalalaaaaa</li>
-                    <li>test note lalalalallalalalalalaaaaa</li>
-                    <li>test note lalalalallalalalalalaaaaa</li>
-                    </ul> 
-                    <hr> 
-                    <h2>Personality</h2>
-                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
-                    <hr> 
-                    <h2>History</h2>
-                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020. <br><br>
-                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
-                    <hr>
-                    <h2>Abilities</h2>
-                    <b>Thinking Monkey</b> - is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
-                    <hr> 
-                    <h2>Trivia</h2>
-                    <ul>
-                    <li>test trivia lalalalallalalalalalaaaaa</li>
-                    <li>test trivia lalalalallalalalalalaaaaa</li>
-                    <li>test trivia lalalalallalalalalalaaaaa</li>
-                    </ul> 
-                    `,
-                cPositive: [
-                    {
-                        cardId: 'supergoldenflash:thinkingMonkey',
-                        relation: 'caption'
-                    },
-                ],
-                cNegative: [
-                    {
-                        cardId: 'supergoldenflash:thinkingMonkey',
-                        relation: 'caption'
-                    },
-                ],
-                image: 'images/i/thinking-monkey-i.jpg'
-            },
         ]
     },
     {
         title: '1',
         menuId: 'sgf1',
         subtitle: '',
-        image: 'images/temp2.png',
+        image: 'icons/lightning-bolt.png',
         color: 'var(--color-8)',
         hidden: true,
         parent: 'supergoldenflash',
@@ -405,7 +337,7 @@ menuItems = [
         title: '2',
         menuId: 'sgf2',
         subtitle: '',
-        image: 'images/temp2.png',
+        image: 'icons/lightning-bolt.png',
         color: 'var(--color-8)',
         hidden: true,
         parent: 'supergoldenflash',
@@ -417,7 +349,7 @@ menuItems = [
         title: '3',
         menuId: 'sgf3',
         subtitle: '',
-        image: 'images/temp2.png',
+        image: 'icons/lightning-bolt.png',
         color: 'var(--color-8)',
         hidden: true,
         parent: 'supergoldenflash',
@@ -429,7 +361,7 @@ menuItems = [
         title: '4',
         menuId: 'sgf4',
         subtitle: '',
-        image: 'images/temp2.png',
+        image: 'icons/lightning-bolt.png',
         color: 'var(--color-8)',
         hidden: true,
         parent: 'supergoldenflash',
@@ -441,7 +373,7 @@ menuItems = [
         title: '1',
         menuId: 'helpers1',
         subtitle: '',
-        image: 'images/temp2.png',
+        image: 'icons/plug.png',
         color: 'var(--color-9)',
         hidden: true,
         parent: 'supergoldenflash',
@@ -453,7 +385,7 @@ menuItems = [
         title: '2',
         menuId: 'helpers2',
         subtitle: '',
-        image: 'images/temp2.png',
+        image: 'icons/plug.png',
         color: 'var(--color-9)',
         hidden: true,
         parent: 'supergoldenflash',
@@ -465,7 +397,7 @@ menuItems = [
         title: '3',
         menuId: 'helpers3',
         subtitle: '',
-        image: 'images/temp2.png',
+        image: 'icons/plug.png',
         color: 'var(--color-9)',
         hidden: true,
         parent: 'supergoldenflash',
@@ -635,19 +567,72 @@ menuItems = [
         menuId: 'companies',
         title: 'Companies',
         subtitle: '',
-        image: 'images/temp2.png',
+        image: 'icons/companies.png',
         color: 'var(--color-10)',
         scale: 1,
         labels: [
             {
-                cardId: 'info',
-                title: 'Info',
-                subtitle: 'About Companies',
+                cardId: 'thinkingMonkey',
+                title: 'Thinking Monkey',
+                subtitle: '',
+
+                isCharacter: true, 
+                cSpecies: 'Monkey',
+                cAge: 'unknown',
+                cGender: 'male',
+                cBirthday: 'mm/dd/yyyy',
+                cNicknames: '',
+                cAddOns: `Source: <a href="https://knowyourmeme.com/memes/thinking-monkey">knowyourmeme.com</a>`,
+                cReference: 'images/r/thinking-monkey-r.jpg',
+                cGallery: [
+                   'images/r/thinking-monkey-r.jpg',
+                   'images/r/thinking-monkey-r.jpg',
+                   'images/r/thinking-monkey-r.jpg',
+                   'images/r/thinking-monkey-r.jpg',
+                   'images/r/thinking-monkey-r.jpg',
+                   'images/r/thinking-monkey-r.jpg',
+                    ],
                 detail: `
-                    This is a template for a normal card.<br>You can fill these with whatever you want in raw HTML.
-                `,
-                banner: true,
-                image: 'images/temp2.png'
+                    <span style="border-left: 6px solid var(--white); padding-right: 8px"></span><span> The only limit to our realization of tomorrow is our doubts of today.</span><br> 
+                    <span style="border-left: 6px solid var(--white); padding-right: 8px"></span>— person <br><br>
+                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
+                    <h2>Appearance</h2>
+                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
+                    <hr> 
+                    <h2>Personality</h2>
+                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
+                    <hr> 
+                    <h2>History</h2>
+                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020. <br><br>
+                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
+                    <hr>
+                    <h2>Abilities</h2>
+                    <ul>
+                    <li>test trivia lalalalallalalalalalaaaaa</li>
+                    <li>test trivia lalalalallalalalalalaaaaa</li>
+                    <li>test trivia lalalalallalalalalalaaaaa</li>
+                    </ul>
+                    <hr> 
+                    <h2>Trivia</h2>
+                    <ul>
+                    <li>test trivia lalalalallalalalalalaaaaa</li>
+                    <li>test trivia lalalalallalalalalalaaaaa</li>
+                    <li>test trivia lalalalallalalalalalaaaaa</li>
+                    </ul> 
+                    `,
+                cPositive: [
+                    {
+                        cardId: 'companies:thinkingMonkey',
+                        relation: 'caption'
+                    },
+                ],
+                cNegative: [
+                    {
+                        cardId: 'companies:thinkingMonkey',
+                        relation: 'caption'
+                    },
+                ],
+                image: 'images/i/thinking-monkey-i.jpg'
             },
             { linkId: 'kinetics' },
                 ], 
@@ -699,7 +684,7 @@ menuItems = [
                     </ul>
                     <h2>Mid priority</h2>
                     <ul>
-                        <li>Nothing here</li>
+                        <li>Move all character info to a mini infobox</li>
                     </ul>
                     <h2>Low priority</h2>
                     <ul>
@@ -778,6 +763,7 @@ menuItems = [
         image: 'icons/random.png',
         color: 'var(--color-2)',
         scale: 1.5,
+        invisible: true,
         labels: [],
     },
 ];

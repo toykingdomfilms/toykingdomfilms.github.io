@@ -31,7 +31,7 @@ function pickCardImage(c, menu) {
 }
 
 // Builds the HTML with OG tags + redirect
-function buildHTML({ title, desc, image, url, cardId, cardTitle, cardExcerpt, cardDetail, cardImage, twitterType = "summary" }) {
+function buildHTML({ title, desc, image, url, cardId, cardTitle, cardExcerpt, cardDetail, cardImage, cardMenu, twitterType = "summary" }) {
     return `<!doctype html>
 <html>
     <head>
@@ -91,13 +91,13 @@ function characterHTMLBuilder(c, html) {
     // const cRelations = c.cRelations ? c.cRelations.length != 0 ? `<hr><h2>Related Characters:</h2><div class="imgContainer">` + c.cRelations.map(rel => `<div class="card internal" data-href="${rel.cardId}" data-caption="${rel.relation}"></div>`).join('') + `</div><br>` : '' : '';
 
     html = `
+        ${cReference}
         ${cSpecies}
         ${cPronouns}
         ${cGender}
         ${cSexuality}
         ${cNicknames}
         ${cAddOns}
-        ${cReference}
         ${details}
         ${cGallery}
     `;
@@ -179,6 +179,7 @@ menuItems.forEach(menu => {
                     <hr>
                     ${html}`,
                 cardImage: c.image,
+                cardMenu: menuItems.find(m => m.labels.includes(c)).menuId,
                 twitterType,
             });
 

@@ -163,7 +163,6 @@
     /* outline: 1px solid red !important; */
 }
 
-
 html,
 body {
     height: 100%;
@@ -214,10 +213,6 @@ hr {
     border-top: 3px solid var(--hr-color);
     margin: 12px 0;
 }
-
-
-
-
 
 /* --------------------------
     MAIN MENU
@@ -325,83 +320,6 @@ hr {
     position: absolute;
     transition: filter var(--layout-transition-speed), transform 0.5s cubic-bezier(.2, .9, .2, 1), opacity 1000ms;
 }
-
-/* main menu rings */
-.menu-ring {
-    position: relative;
-    width: 520px;
-    height: 520px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 10;
-    transition: filter 0.5s, transform 0.5s cubic-bezier(.2, .9, .2, 1), scale 1000ms;
-    pointer-events: none;
-}
-
-.orbit-ring {
-    position: absolute;
-    left: 50%;
-    top: 50%;
-    border-radius: 50%;
-    border: 3px solid var(--ring);
-    box-shadow: 0 0 12px var(--ring-inset-shadow) inset;
-    pointer-events: auto;
-    z-index: -1;
-    transform-origin: center center;
-    transition:
-        transform 0.5s cubic-bezier(.2, .9, .2, 1),
-        opacity 0.6s ease;
-
-    animation: ringPulse 2s ease-in-out infinite;
-}
-
-/* individual orbiting menu buttons */
-.menu-item {
-    --size: var(--button-size);
-    width: var(--size);
-    height: var(--size);
-    border-radius: 50%;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 6px 18px var(--menu-button-shadow);
-    transition: transform 150ms, opacity 300ms, box-shadow 0.2s;
-    user-select: none;
-    font-weight: 700;
-    color: var(--menu-button-color);
-    margin: auto;
-    border: 0px;
-    z-index: 12;
-    pointer-events: auto;
-}
-
-.menu-item:hover {
-    box-shadow: 0 0 50px var(--glow, rgba(255, 255, 255, 0.75));
-}
-
-.menu-item-inner {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    flex-direction: column;
-}
-
-.menu-item-thumb img {
-    width: 100%;
-    aspect-ratio: 1 / 1;
-    border-radius: 50%;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    scale: var(--menu-button-thumb-scale);
-}
-
-
 
 
 
@@ -663,7 +581,7 @@ hr {
     .card-text {
         width: 50%;
         height: 100%;
-        padding-left: 12px;
+        padding-left: 24px;
         /* background: transparent; */
         flex: 1;
         max-height: none;
@@ -714,9 +632,6 @@ hr {
     font-size: 14px;
     color: var(--card-excerpt-color);
 }
-
-
-
 
 
 /* --------------------------
@@ -986,9 +901,6 @@ img {
 
 
 
-
-
-
 /* --------------------------
     Interactives
     -------------------------- */
@@ -1190,9 +1102,6 @@ textarea {
 }
 
 
-
-
-
 /* --------------------------
     INTERFACE
     -------------------------- */
@@ -1275,10 +1184,6 @@ textarea {
     pointer-events: none;
 }
 
-
-
-
-
 /* --------------------------
     LAYOUT VISIBILITY
     -------------------------- */
@@ -1306,8 +1211,6 @@ textarea {
     pointer-events: none !important;
     display: none !important;
 }
-
-
 
 
 
@@ -1366,7 +1269,6 @@ textarea {
 /* --------------------------
     Responsive layout
     -------------------------- */
-
 /* small screens */
 @media (max-width:700px) {
     :root {

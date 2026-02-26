@@ -198,7 +198,7 @@ function copyLinkHandler(layout, menuId, cardId = null) {
         navigator.clipboard.writeText(shareURL);
         const icon = e.currentTarget;
         icon.classList.add('copied');
-        icon.title = 'Copied!';
+        icon.title = 'Link Copied!';
         setTimeout(() => { icon.classList.remove('copied'); icon.title = 'Copy shareable link'; }, 1500);
     });
 }
@@ -522,7 +522,7 @@ function initSimpleMode() {
 
     // create main menu
     let menus = [];
-    let menuMatches = menuItems.filter(menu => (!(menu.invisible || menu.hidden)));
+    let menuMatches = menuItems.filter(menu => (!(menu.hidden)));
     if (menuMatches.length > 0) simpleModeCreateMenus(menus, menuMatches);
 
     // main menu data
@@ -1007,7 +1007,7 @@ function characterHTMLBuilder(c, html) {
     const cGender = c.cGender ? `Gender: ${c.cGender}<br>` : '';
     const cBirthday = c.cBirthday ? `Birthday: ${c.cBirthday}<br>` : '';
     const cNicknames = c.cNicknames ? `Nickname: ${c.cNicknames}<br>` : '';
-    const cReference = c.cReference ? `<br><h2>Reference Art:</h2><br><img src="${c.cReference}"><br><br>` : '';
+    const cReference = c.cReference ? `<img src="${c.cReference}" align="right">` : '';
     const cGallery = c.cGallery ? c.cGallery.length != 0 ? `<hr><h2>Gallery:</h2><div class="imgContainer">` + c.cGallery.map(imgSrc => `<img src="${imgSrc}">`).join('') + `</div><br>` : '' : '';
     const cAddOns = c.cAddOns ? `<br>${c.cAddOns}<br>` : '';
     const details = c.detail ? `<hr>${html}<br>` : '';
@@ -1016,17 +1016,17 @@ function characterHTMLBuilder(c, html) {
 
     
     html = `
+        ${cReference}
         ${cSpecies}
         ${cAge}
         ${cGender}
         ${cBirthday}
         ${cNicknames}
         ${cAddOns}
-        ${cReference}
         ${details}
+        ${cGallery}
         ${cPositive}
         ${cNegative}
-        ${cGallery}
     `;
     return html;
 }
