@@ -290,7 +290,7 @@ hr {
 #loading {
     position: absolute;
     left: 50%;
-    top: 95%;
+    top: 50%;
     transform: translate(-50%, -50%);
 }
 
@@ -466,6 +466,11 @@ hr {
     color: var(--card-excerpt-color)
 }
 
+
+.card:not(:has(.thumb)) .card-text .card-text-excerpt {
+    white-space: normal;
+}
+
 .card .card-text.full {
     flex: 1;
     max-height: none;
@@ -586,6 +591,10 @@ hr {
         flex: 1;
         max-height: none;
     }
+}
+
+.card[data-is-semi-banner="true"] {
+    width: max(calc(var(--card-scale) * 450px), 49%);
 }
 
 .card[data-is-banner="true"] .card-text .card-text-title {

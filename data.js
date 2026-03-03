@@ -3,8 +3,8 @@
 // tip: press ctrl+f on your keyboard to navigate around easily!
 
 // Metadata
-const lastUpdated = '2026-2-24';
-const version = '1.0.0';
+const lastUpdated = '2026-3-3';
+const version = '1.0.2';
 
 
 
@@ -65,6 +65,7 @@ orbitData = [
 // unclickable: bool        - if set, this card becomes unclickable
 // blank: bool              - if set, make this card textless (image-only)
 // banner: bool             - if set, this card becomes a banner-type card
+// semibanner: bool         - if set, this card becomes a semibanner-type card which is only 50% in length so you could fit two in a single row (might be wacky sometimes)
 // linkId: string           - if set as the only attribute, this card links to another menu (menuId)
 // reference: string        - if set as the only attribute, this card copies another card (menuId:cardId)
 // isCharacter: bool        - if set, this is a character card
@@ -186,30 +187,20 @@ menuItems = [
         color: 'var(--color-1)',
         scale: 1,
         labels: [
-            {
-                cardId: 'info',
-                title: 'Info',
-                subtitle: 'About Collection',
-                detail: `
-                    This is a template for a normal card.<br>You can fill these with whatever you want in raw HTML.
-                `,
-                banner: true,
-                image: 'images/temp2.png'
-            },
             { title: 'Animals' },
-            { linkId: 'puppyplanet' },
+            { linkId: 'puppy-planet' },
             { linkId: 'cats' },
-            { linkId: 'fruityfrogs' },
+            { linkId: 'fruity-frogs' },
             { title: 'Food' },
-            { linkId: 'fruitcubes' },
+            { linkId: 'fruit-cubes' },
             { title: 'Vehicles' },
-            { linkId: 'cafecars' },
-            { linkId: 'racecars' },
+            { linkId: 'cafe-cars' },
+            { linkId: 'race-cars' },
                 ], 
     },
     {
         title: 'Puppy Planet',
-        menuId: 'puppyplanet',
+        menuId: 'puppy-planet',
         subtitle: '',
         image: 'images/temp2.png',
         color: 'var(--color-11)',
@@ -231,7 +222,7 @@ menuItems = [
     },
     {
         title: 'Fruity Frogs',
-        menuId: 'fruityfrogs',
+        menuId: 'fruity-frogs',
         subtitle: '',
         image: 'icons/frog.png',
         color: 'var(--color-12)',
@@ -242,7 +233,7 @@ menuItems = [
     },
     {
         title: 'Fruit Cubes',
-        menuId: 'fruitcubes',
+        menuId: 'fruit-cubes',
         subtitle: '',
         image: 'images/temp2.png',
         color: 'var(--color-14)',
@@ -253,7 +244,7 @@ menuItems = [
     },
     {
         title: 'Café Cars',
-        menuId: 'cafecars',
+        menuId: 'cafe-cars',
         subtitle: '',
         image: 'icons/coffee.png',
         color: 'var(--color-13)',
@@ -264,7 +255,7 @@ menuItems = [
     },
     {
         title: 'Race Cars',
-        menuId: 'racecars',
+        menuId: 'race-cars',
         subtitle: '',
         image: 'icons/race-flag.png',
         color: 'var(--color-4)',
@@ -300,6 +291,24 @@ menuItems = [
                 image: 'icons/lightning-bolt-yellow.png'
             },
             {
+                cardId: 'no-owner',
+                title: 'No Owner',
+                subtitle: 'SGF with no owner',
+                semibanner: true,
+                detail: `
+                `,
+                image: ''
+            },
+            {
+                cardId: 'power-change',
+                title: 'Power Change',
+                subtitle: `SGF who's power needs revising`,
+                semibanner: true,
+                detail: `
+                `,
+                image: ''
+            },
+            {
                 title: 'SGF',
                 subtitle: '',
             },
@@ -314,11 +323,6 @@ menuItems = [
             { linkId: 'helpers1' },
             { linkId: 'helpers2' },
             { linkId: 'helpers3' },
-            {
-                title: 'No Owner',
-                subtitle: ''
-            },
-            { reference: 'blog:452023' },
         ]
     },
     {
@@ -330,8 +334,7 @@ menuItems = [
         hidden: true,
         parent: 'supergoldenflash',
         labels: [
-                
-                ], 
+        ], 
     },
     {
         title: '2',
@@ -562,6 +565,17 @@ menuItems = [
                 ], 
     },
     // Orbit 2
+    /*{   // Basic Info
+        orbit: 2,
+        menuId: 'basic-info',
+        title: 'Basic Info',
+        subtitle: '',
+        image: 'icons/companies.png',
+        color: 'var(--color-10)',
+        scale: 1,
+        labels: [
+                ], 
+    },*/
     {   // Companies
         orbit: 2,
         menuId: 'companies',
@@ -595,10 +609,7 @@ menuItems = [
                 detail: `
                     <span style="border-left: 6px solid var(--white); padding-right: 8px"></span><span> The only limit to our realization of tomorrow is our doubts of today.</span><br> 
                     <span style="border-left: 6px solid var(--white); padding-right: 8px"></span>— person <br><br>
-                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
-                    <h2>Appearance</h2>
-                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
-                    <hr> 
+                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020. 
                     <h2>Personality</h2>
                     Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
                     <hr> 
@@ -648,6 +659,74 @@ menuItems = [
         labels: [
                 ], 
     },
+    /*{   // Districts
+        orbit: 2,
+        menuId: 'districts',
+        title: 'City Districts',
+        subtitle: 'ignore how cringe this page is lol',
+        image: 'icons/map-pin.png',
+        color: 'var(--color-11)',
+        scale: 1,
+        hidden: true,
+        labels: [
+             {
+                title: 'Locations',
+                subtitle: '',
+            },
+            {
+                cardId: 'rocky-mountain',
+                title: 'Rocky Mountain',
+                subtitle: '',
+                detail: '',
+                unclickable: true,
+                image: ''
+            },
+            /*{
+                title: 'Commercial',
+                subtitle: '',
+            },*/
+            /*{
+                title: 'Institutional',
+                subtitle: '',
+            },
+            {
+                cardId: 'super-hero-school',
+                title: 'Super Hero School',
+                subtitle: '',
+                detail: '',
+                unclickable: true,
+                image: ''
+            },
+            {
+                cardId: 'warrior-school',
+                title: 'Warrior School',
+                subtitle: '',
+                detail: '',
+                unclickable: true,
+                image: ''
+            },
+            {
+                cardId: 'hero-league',
+                title: 'Hero League',
+                subtitle: '',
+                unclickable: true,
+                detail: '',
+                image: ''
+            },
+            {
+                cardId: 'garden',
+                title: 'Garden',
+                subtitle: '',
+                unclickable: true,
+                detail: '',
+                image: ''
+            },
+            /*{
+                title: 'Industrial',
+                subtitle: '',
+            },*/
+    //    ], 
+    //}
 
     // Orbit 3
     {   // Blog

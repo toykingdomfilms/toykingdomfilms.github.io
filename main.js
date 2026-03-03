@@ -769,6 +769,11 @@ function setCardAttributes(card, c) {
     if (c.reference) card.dataset.isReference = c.reference;
     if (c.url) card.dataset.url = c.url;
     if (c.banner) card.dataset.isBanner = c.banner;
+    if (c.semibanner) { 
+        card.dataset.isSemiBanner = c.semibanner;
+        c.banner = true;
+        card.dataset.isBanner = true;
+    }
     if (c.isCharacter) card.dataset.isCharacter = c.isCharacter;
     if (c.unclickable) card.dataset.isUnclickable = c.unclickable;
     if (c.blank) card.dataset.blank = c.blank;
@@ -932,6 +937,7 @@ function openCard(card, c) {
     const active = card.cloneNode(true);
     active.classList.add('active');
     delete active.dataset.isBanner;
+    delete active.dataset.isSemiBanner;
 
     active.classList.add('no-transition');
     active.style.translate = "10px";
@@ -1543,11 +1549,17 @@ function resetLayoutTransition() {
     imageView.classList.remove("no-transition");
 }
 
-// loading indicator
-window.addEventListener('load', () => { setLayoutViz(loading, false); appLoaded = true; });
-
 // initialize everything
 initCardData();
 initLayoutViz();
 createStarfield();
-initMainMenu();
+
+setLayoutViz(UIPanelTop, false);
+setLayoutViz(UIPanelBottom, false);
+window.addEventListener('load', () => {
+    setLayoutViz(loading, false);
+    setLayoutViz(UIPanelTop, true);
+    setLayoutViz(UIPanelBottom, true);
+    initMainMenu();
+    appLoaded = true;
+});

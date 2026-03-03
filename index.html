@@ -1,21 +1,24 @@
 <!DOCTYPE html>
-<meta charset="UTF-8">
-<link rel="icon" type="image" href="icons/fav-icon.png">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" id="vp">
-<meta name="theme-color" content="#4b5499">
-<meta property="og:site_name" content="Wiki">
-<meta property="og:title" content="Wiki">
-<meta property="og:image" content="/images/temp3.png">
-<meta property="og:description" content="Welcome!">
-<link rel="stylesheet" href="style.css">
-<title>Wiki</title>
-</html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" type="image" href="icons/fav-icon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" id="vp">
+    <meta name="theme-color" content="#4b5499">
+    <meta property="og:site_name" content="Wiki">
+    <meta property="og:title" content="Wiki">
+    <meta property="og:image" content="/images/temp3.png">
+    <meta property="og:description" content="Welcome!">
+    <link rel="stylesheet" href="style.css">
+    <title>Wiki</title>
+</head>
 
 <body>
 
     <!-- App -->
     <div class="app">
-        <div id="loading">loading assets...</div>
+        <div id="loading">
+            <img id="loadingLogo" class="logo" src="icons/loading.gif" draggable="false">
+        </div>
         <!-- Starfield -->
         <div id="starfield"></div>
 
@@ -122,3 +125,4 @@
     <script src="splashtext.js"></script>
     <script src="main.js"></script>
 </body>
+</html>
