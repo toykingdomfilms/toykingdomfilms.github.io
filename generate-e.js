@@ -37,7 +37,6 @@ function buildHTML({ title, desc, image, url, cardId, cardTitle, cardExcerpt, ca
     <head>
         <meta charset="utf-8">
         <meta name="theme-color" content="#4b5499">
-        <meta name="theme-color" content="#C894F9">
         <title>${cardTitle}</title>
         <link rel="icon" type="image" href="/icons/fav-icon.png">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" id="vp">
@@ -63,8 +62,10 @@ function buildHTML({ title, desc, image, url, cardId, cardTitle, cardExcerpt, ca
                     </div>
                 </div>
                 <div id="detailViewContent" class="detail-view-content">
-                    <small>Previewing "${cardTitle}" - <a href="${esc(url)}">See more in Wiki</a></small>
-                    ${cardDetail}
+                    <div class="detail-section detail-main">
+                        <small>Previewing "${cardTitle}" - <a href="${esc(url)}">See more in Wiki</a></small>
+                        ${cardDetail}
+                    </div>
                 </div>
             </div>
             `
@@ -78,28 +79,27 @@ function buildHTML({ title, desc, image, url, cardId, cardTitle, cardExcerpt, ca
 
 // HTML builder for character cards
 function characterHTMLBuilder(c, html) {
-    const cSpecies = c.cSpecies ? `Species: ${c.cSpecies}<br>` : '';
-    const cPronouns = c.cPronouns ? `Pronouns: ${c.cPronouns}<br>` : '';
-    const cGender = c.cGender ? `Gender: ${c.cGender}<br>` : '';
-    const cSexuality = c.cSexuality ? `Sexuality: ${c.cSexuality}<br>` : '';
-    const cNicknames = c.cNicknames ? `Nickname: ${c.cNicknames}<br>` : '';
-    const cReference = c.cReference ? `<br><h2>Reference Art:</h2><br><img src="${c.cReference}"><br><br>` : '';
+    const species = c.species ? `Species: ${c.species}<br>` : '';
+    const age = c.age ? `Age: ${c.age}<br>` : '';
+    const gender = c.gender ? `Gender: ${c.gender}<br>` : '';
+    const birthday = c.birthday ? `Birthday: ${c.birthday}<br>` : '';
+    const nicknames = c.nicknames ? `Nickname: ${c.nicknames}<br>` : '';
+    const refsheet = c.refsheet ? `<img src="${c.refsheet}" align="right" width="400px">` : '';
     // const cGallery = c.cGallery ? c.cGallery.length != 0 ? `<hr><h2>Picked Image:</h2>` + `<img src="${c.cGallery[0]}">` + `<br>` : '' : '';
-    const cGallery = c.cGallery ? c.cGallery.length != 0 ? `<hr><h2>Top Images:</h2><div class="imgContainer">` + c.cGallery.slice(0, 3).map(imgSrc => `<img src="${imgSrc}">`).join('') + `</div><br>` : '' : '';
-    const cAddOns = c.cAddOns ? `<br>${c.cAddOns}<br>` : '';
+    const gallery = c.gallery ? c.gallery.length != 0 ? `<hr><h2>Top Images:</h2><div class="imgContainer">` + c.gallery.slice(0, 3).map(imgSrc => `<img src="${imgSrc}">`).join('') + `</div><br>` : '' : '';
+    const addOns = c.addOns ? `<br>${c.addOns}<br>` : '';
     const details = c.detail ? `<hr>${html}<br>` : '';
-    // const cRelations = c.cRelations ? c.cRelations.length != 0 ? `<hr><h2>Related Characters:</h2><div class="imgContainer">` + c.cRelations.map(rel => `<div class="card internal" data-href="${rel.cardId}" data-caption="${rel.relation}"></div>`).join('') + `</div><br>` : '' : '';
 
     html = `
-        ${cReference}
-        ${cSpecies}
-        ${cPronouns}
-        ${cGender}
-        ${cSexuality}
-        ${cNicknames}
-        ${cAddOns}
+        ${refsheet}
+        ${species}
+        ${age}
+        ${gender}
+        ${birthday}
+        ${nicknames}
+        ${addOns}
         ${details}
-        ${cGallery}
+        ${gallery}
     `;
     return html;
 }
@@ -142,13 +142,13 @@ menuItems.forEach(menu => {
             // CHARACTER DESCRIPTION
             let desc = c.subtitle || "View card";
             if (c.isCharacter) {
-                const cSpecies = c.cSpecies ? `Species: ${c.cSpecies}\n` : '';
-                const cAge = c.cAge ? `Age: ${c.cAge}\n` : '';
-                const cGender = c.cGender ? `Gender: ${c.cGender}\n` : '';
-                const cBirthday = c.cBirthday ? `Birthday: ${c.cBirthday}\n` : '';
-                const cNicknames = c.cNicknames ? `Nicknames: ${c.cNicknames}\n` : '';
+                const species = c.species ? `Species: ${c.species}<br>` : '';
+            const age = c.age ? `Age: ${c.age}<br>` : '';
+            const gender = c.gender ? `Gender: ${c.gender}<br>` : '';
+            const birthday = c.birthday ? `Birthday: ${c.birthday}<br>` : '';
+            const nicknames = c.nicknames ? `Nickname: ${c.nicknames}<br>` : '';
 
-                desc = `${cSpecies}${cAge}${cGender}${cBirthday}${cNicknames}`.trim();
+                desc = `${species}${age}${gender}${birthday}${nicknames}`.trim();
             }
 
              // CARD DETAIL

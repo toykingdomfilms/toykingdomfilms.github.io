@@ -220,112 +220,6 @@ function initMainMenu() {
 }
 */
 
-// make orbit group for menu items
-function makeOrbitGroup(orbitGroup) {
-    menuItems.forEach(m => {
-        if (m.hidden) return;
-        const orbit = m.orbit;
-        if (!orbitGroup[orbit]) orbitGroup[orbit] = [];
-        orbitGroup[orbit].push(m);
-    });
-}
-
-// calculate orbit positions
-function calculateMenuPos(angleRad, layer, direction, phaseOffset = 0) {
-    const oData = orbitData.find(od => od.orbit === layer);
-    layer = oData?.orbitNum || layer;
-
-    const baseRadius = getCSSVar('--menu-radius', 'int') || 180;
-    const r = layer === 0 ? 0 : baseRadius * layer * 1.2 + 60;
-
-    const baseDuration = getCSSVar('--ring-rotation-duration', 'float') || 60;
-    const periodSec = baseDuration * layer;
-    const omega = (2 * Math.PI) / periodSec * direction;
-
-    let x0, y0;
-    const oScaleX = oData?.scaleX || getCSSVar('--menu-orbit-scale-x', 'float');
-    const oScaleY = oData?.scaleY || getCSSVar('--menu-orbit-scale-y', 'float');
-    const oX = oData?.offsetX || 0;
-    const oY = oData?.offsetY || 0;
-
-    x0 = (Math.cos(angleRad + phaseOffset * omega) * r * oScaleX) + oX;
-    y0 = (Math.sin(angleRad + phaseOffset * omega) * r * oScaleY) + oY;
-
-    return { r, omega, x0, y0 };
-}
-
-// calculate menu scale + hover effect
-let cursorX = 0, cursorY = 0;
-window.addEventListener('mousemove', e => { cursorX = e.clientX; cursorY = e.clientY; });
-
-function calculateMenuScale(btn, cursorPos = { x: cursorX, y: cursorY }) {
-    const maxDist = 300;
-
-    let zoom = 1;
-    const rect = btn.getBoundingClientRect();
-    const btnX = rect.left + rect.width / 2;
-    const btnY = rect.top + rect.height / 2;
-
-    const dx = cursorPos.x - btnX;
-    const dy = cursorPos.y - btnY;
-    const dist = Math.sqrt(dx * dx + dy * dy);
-
-    zoom = 1 + Math.max(0, (1 - dist / maxDist)) * 0.375;
-    return zoom;
-}
-
-// apply orbit positions to menu elements
-function applyMenuPos(btn, s, r, omega, x0, y0) {
-    btn.style.left = '50%';
-    btn.style.top = '50%';
-    btn.dataset.radius = r;
-    btn.dataset.omega = omega;
-
-    btn.dataset.x = x0;
-    btn.dataset.y = y0;
-    btn.dataset.x0 = x0;
-    btn.dataset.y0 = y0;
-    btn.dataset.s = s;
-
-    btn.style.transform = `translate3d(calc(${btn.dataset.x}px + -50%), calc(${btn.dataset.y}px + -50%), 0) scale(${btn.dataset.s})`;
-}
-
-// create menu item elements for a given orbit layer
-function createMenuItemElements(menus, layer, orbitLayer, count, direction, phaseOffset) {
-    menus.forEach((m, i) => {
-        const angleDeg = (i / count + 0.75) * 360 + phaseOffset;
-        const angleRad = angleDeg * (Math.PI / 180);
-
-        const btn = document.createElement('div');
-        btn.className = 'menu-item';
-
-        btn.dataset.angleRad = angleRad;
-        btn.dataset.layer = layer;
-        btn.dataset.direction = direction;
-        btn.dataset.index = i;
-        btn.dataset.scale = m.scale || 1;
-        btn.dataset.menuId = m.menuId;
-
-        btn.style.setProperty('--glow', m.color);
-        btn.style.background = m.color || 'transparent';
-        const img = m.image ? `<div class="menu-item-thumb"><img src="${m.image}"  draggable="false"></div>` : ''
-        btn.innerHTML = `
-            <div class="menu-item-inner">
-                ${img}
-                ${m.showTitle && m.title ? `<div class="menu-item-title">${m.title}</div>` : ''}
-            </div>
-        `;
-
-        const { r, omega, x0, y0 } = calculateMenuPos(angleRad, layer, direction);
-        // const s = m.scale || 1;
-        const s = calculateMenuScale(btn);
-        applyMenuPos(btn, s, r, omega, x0, y0);
-
-        btn.addEventListener('click', () => { openMainMenuButton(btn, m); });
-        orbitLayer.appendChild(btn);
-    });
-}
-
 // handle opening menus from the main menu interface
 let openSingle = false;
 function openMainMenuButton(btn, m) {
@@ -337,64 +231,6 @@ function openMainMenuButton(btn, m) {
         return;
     }
     openMenu(btn, m);
-}
-
-// execute expander animation (todo)
-function animateExpander() {
-    return;
-}
-
-// position orbit rings
-const rings = [];
-function positionOrbitRings(rings) {
-    rings.forEach(ring => {
-        let layer = ring.dataset.layer;
-        const oData = orbitData.find(o => o.orbit == layer);
-
-        layer = oData?.orbitNum || layer;
-        const oScaleX = oData?.scaleX || getCSSVar('--menu-orbit-scale-x', 'float');
-        const oScaleY = oData?.scaleY || getCSSVar('--menu-orbit-scale-y', 'float');
-        const oX = oData?.offsetX || 0;
-        const oY = oData?.offsetY || 0;
-
-        const baseRadius = getCSSVar('--menu-radius', 'int') || 180;
-        const diameter = (baseRadius * layer * 1.2 + 60) * 2;
-
-        ring.style.width = `${diameter}px`;
-        ring.style.height = `${diameter}px`;
-        ring.style.transform = `translate(calc(${oX}px + -50%), calc(${oY}px + -50%)) scale(${oScaleX}, ${oScaleY})`;
-        ring.style.zIndex = '-1';
-    });
-}
-
-// handle menu elements and positioning
-function orbitMenuHandler(orbitGroup) {
-    Object.keys(orbitGroup).forEach(l => {
-        const menus = orbitGroup[l];
-        const layer = parseFloat(l);
-        const oData = orbitData.find(o => o.orbit == layer);
-
-        const orbitLayer = document.createElement('div');
-        orbitLayer.classList.add('orbit-layer');
-        menuRing.appendChild(orbitLayer);
-
-        const direction = oData?.direction || (layer % 2 === 0 ? 1 : -1);
-        const phaseOffset = Math.random() * 360;
-        const count = menus.length;
-
-        createMenuItemElements(menus, layer, orbitLayer, count, direction, phaseOffset);
-
-        const ring = document.createElement('div');
-        ring.classList.add('orbit-ring');
-        ring.dataset.layer = layer;
-        ring.style.animationDelay = `${-layer * 0.5}s`;
-        rings.push(ring);
-
-        positionOrbitRings(rings);
-
-        menuRing.insertBefore(ring, menuRing.firstChild);
-
-    });
 }
 
 // create menu items
@@ -421,40 +257,6 @@ function initMainMenu() {
 
 // update main menu scale on resize
 window.addEventListener('resize', () => { resetMenuTransform(); });
-
-// main loop for orbiting menu items
-let lastFrame = 0;
-let frame = 0;
-let frameAccum = 0;
-function orbitMenuLoop(t) {
-    const dt = (t - lastFrame) / 1000;
-    lastFrame = t;
-    frameAccum += dt;
-
-    // limit to certain fps
-    if (frameAccum >= 1 / ORBIT_FPS) {
-        frame += frameAccum;
-        frameAccum = 0;
-
-        const cursorPos = { x: cursorX, y: cursorY };
-
-        btn = $$('.orbit-layer .menu-item');
-        btn.forEach(b => {
-            const angleRad = parseFloat(b.dataset.angleRad);
-            const layer = parseFloat(b.dataset.layer);
-            const direction = parseFloat(b.dataset.direction);
-
-            const { r, omega, x0, y0 } = calculateMenuPos(angleRad, layer, direction, -frame);
-            const s = (!menuIsOpen && !isDragging) ? calculateMenuScale(b, cursorPos) * b.dataset.scale : b.dataset.scale;
-            applyMenuPos(b, s, r, omega, x0, y0);
-
-        });
-
-        positionOrbitRings(rings);
-    }
-
-    requestAnimationFrame(orbitMenuLoop);
-}
 
 // blur main menu
 function blurMainMenu(bool) {
@@ -642,13 +444,12 @@ function menuCardBehavior(card, c) {
     card.style.boxShadow = `inset 0 0 30px color-mix(in srgb, ${m.color} 50%, transparent)`;
 
     card.addEventListener('click', () => { 
-        if (m) openMenuById(m.menuId); 
-        if (m.menuId === "random") { openRandom(); setButtonViz(rerollBtn, true); return; }
         if (m.labels && m.labels.length == 1) {
         openSingle = true;
+        if (m.menuId === "random") { openRandom(); setButtonViz(rerollBtn, true); return; }
         openCardById(m.menuId, m.labels[0].cardId);
         return;
-    }
+    } else if (m) openMenuById(m.menuId);
     });
     card.addEventListener('mouseover', () => card.style.backgroundColor = `color-mix(in srgb, ${m.color} 30%, transparent)`);
     card.addEventListener('mouseout', () => card.style.backgroundColor = `transparent`);
@@ -973,27 +774,93 @@ function renderCardDetail(c) {
     detailViewContent.scrollTop = 0;
 
     const menu = getMenuData(c.cardParentId);
-    let html = c.detail || '';
-    if (c.isCharacter) html = characterHTMLBuilder(c, html)
+    const html = cardHTMLBuilder(c)
 
-    detailViewContent.innerHTML = `
-        <h1>
+    let tabs = '';
+    let gallery = '', relatives = '';
+    const hasGallery = (c.gallery && c.gallery.length != 0) || (c.reference);
+    if (hasGallery || c.relatives) {
+        tabs = `
+            <button class="tab main" type="button">Character</button>
+            ${hasGallery ? `<button class="tab gallery" type="button">Gallery</button>` : ''}
+            ${c.relatives ? `<button class="tab relatives" type="button">Relationships</button>` : ''}
+            `
+        gallery = hasGallery ? `<div class="container grid">` + (c.reference ? `<img src=${c.reference}>` : '') + (c.gallery ? c.gallery.map(imgSrc => `<img src="${imgSrc}">`).join('') : '') + `</div><br>` : '';
+        relatives = c.relatives ? c.relatives.length != 0 ? `<div class="container">` + c.relatives.map(rel => `<div class="card internal" data-href="${rel.cardId}" data-caption="${rel.relation}"></div>`).join('') + `</div><br>` : '' : '';
+        negative = c.negative ? c.negative.length != 0 ? `<div class="container">` + c.negative.map(rel => `<div class="card internal" data-href="${rel.cardId}" data-caption="${rel.relation}"></div>`).join('') + `</div><br>` : '' : '';
+    }
+
+    const tabEl = tabs ? `<small class="detail-view-tabs">${tabs}</small><br>` : '';
+
+    const mainSection = `
+        <div class="detail-section detail-main">
             ${!c.blank
             ? `
                 <small class="card-parent-link"><a data-open-card="${menu.menuId}">${menu.title}</a> /</small>
-                <br>
-                ${c.title}${copyLinkIcon}`
-            : `<small class="card-parent-link">From <a data-open-card="${menu.menuId}">${menu.title}</a></small>${copyLinkIcon}`}
-        </h1>
+                <h1 style="margin-top: 0;">${c.title} ${copyLinkIcon}</h1>`
+             : `<small class="card-parent-link">From <a data-open-card="${menu.menuId}">${menu.title}</a></small>${copyLinkIcon}`}
         <hr>
         ${html}
-        `;
+        </div>`;
 
+    const gallerySection = gallery ? `<div class="detail-section detail-gallery remove">${gallery}</div>` : '';
+    const relativesSection = relatives 
+        ? `
+            <div class="detail-section detail-relatives remove">
+                <h2>Positive relationships</h2>${relatives}<hr>
+                <h2>Negative relationships</h2>${negative}
+            </div>
+        ` : '';
 
-    // cardDetailScriptHandler(c)
+    detailViewContent.innerHTML = `${tabEl}${mainSection}${gallerySection}${relativesSection}`;
+
+    // cardDetailScriptHandler(c);
     copyLinkHandler(detailView, menu.menuId, c.cardId);
+    if (tabs) handleDetailViewTabs();
 
     internalCardHandler();
+}
+
+// handle navigation tabs on the detail view
+function handleDetailViewTabs() {
+    const tabsContainer = detailViewContent.querySelector('.detail-view-tabs');
+    if (!tabsContainer) return;
+
+    const btnMain = tabsContainer.querySelector('button.tab.main');
+    const btnGallery = tabsContainer.querySelector('button.tab.gallery');
+    const btnRelatives = tabsContainer.querySelector('button.tab.relatives');
+
+    const secMain = detailViewContent.querySelector('.detail-main');
+    const secGallery = detailViewContent.querySelector('.detail-gallery');
+    const secRelatives = detailViewContent.querySelector('.detail-relatives');
+
+    function setActive(button) {
+        tabsContainer.querySelectorAll('button.tab').forEach(b => b.classList.remove('active'));
+        if (button) button.classList.add('active');
+    }
+
+    function showSection(section) {
+        [secMain, secGallery, secRelatives].forEach(s => { if (!s) return; s.classList.add('remove'); });
+        if (section) {
+            section.classList.remove('remove');
+            section.classList.add('no-transition');
+            section.style.opacity = 0;
+            section.style.transform = "translateX(20px)";
+            setTimeout(() => {
+                section.classList.remove('no-transition');
+                section.style.opacity = 1;
+                section.style.transform = "none";
+            }, 1);
+        }
+    }
+
+    // initialize: show main by default
+    setActive(btnMain);
+    showSection(secMain);
+
+    if (btnMain) btnMain.addEventListener('click', () => { setActive(btnMain); showSection(secMain); });
+    if (btnGallery && secGallery) btnGallery.addEventListener('click', () => { setActive(btnGallery); showSection(secGallery); });
+    if (btnRelatives && secRelatives) btnRelatives.addEventListener('click', () => { setActive(btnRelatives); showSection(secRelatives); internalCardHandler(); });
 }
 
 // handles card that are placed as div element inside the detail view
@@ -1007,33 +874,30 @@ function internalCardHandler() {
 }
 
 // HTML builder for character cards
-function characterHTMLBuilder(c, html) {
-    const cSpecies = c.cSpecies ? `Species: ${c.cSpecies}<br>` : '';
-    const cAge = c.cAge ? `Age: ${c.cAge}<br>` : '';
-    const cGender = c.cGender ? `Gender: ${c.cGender}<br>` : '';
-    const cBirthday = c.cBirthday ? `Birthday: ${c.cBirthday}<br>` : '';
-    const cNicknames = c.cNicknames ? `Nickname: ${c.cNicknames}<br>` : '';
-    const cReference = c.cReference ? `<img src="${c.cReference}" align="right">` : '';
-    const cGallery = c.cGallery ? c.cGallery.length != 0 ? `<hr><h2>Gallery:</h2><div class="imgContainer">` + c.cGallery.map(imgSrc => `<img src="${imgSrc}">`).join('') + `</div><br>` : '' : '';
-    const cAddOns = c.cAddOns ? `<br>${c.cAddOns}<br>` : '';
+function cardHTMLBuilder(c) {
+    let html = c.detail || '';
+    if (c.isCharacter) {
+    const species = c.species ? `Species: ${c.species}<br>` : '';
+    const age = c.age ? `Age: ${c.age}<br>` : '';
+    const gender = c.gender ? `Gender: ${c.gender}<br>` : '';
+    const birthday = c.birthday ? `Birthday: ${c.birthday}<br>` : '';
+    const nicknames = c.nicknames ? `Nickname: ${c.nicknames}<br>` : '';
+    const refsheet = c.refsheet ? `<img src="${c.refsheet}" align="right" width="400px">` : '';
+    const addOns = c.addOns ? `<br>${c.addOns}<br>` : '';
     const details = c.detail ? `<hr>${html}<br>` : '';
-    const cPositive = c.cPositive ? c.cPositive.length != 0 ? `<hr><h2>Positive relationships:</h2><div class="imgContainer">` + c.cPositive.map(rel => `<div class="card internal" data-href="${rel.cardId}" data-caption="${rel.relation}"></div>`).join('') + `</div><br>` : '' : '';
-    const cNegative = c.cNegative ? c.cNegative.length != 0 ? `<hr><h2>Negative relationships:</h2><div class="imgContainer">` + c.cNegative.map(rel => `<div class="card internal" data-href="${rel.cardId}" data-caption="${rel.relation}"></div>`).join('') + `</div><br>` : '' : '';
 
     
     html = `
-        ${cReference}
-        ${cSpecies}
-        ${cAge}
-        ${cGender}
-        ${cBirthday}
-        ${cNicknames}
-        ${cAddOns}
+        ${refsheet}
+        ${species}
+        ${age}
+        ${gender}
+        ${birthday}
+        ${nicknames}
+        ${addOns}
         ${details}
-        ${cGallery}
-        ${cPositive}
-        ${cNegative}
     `;
+    }
     return html;
 }
 
@@ -1409,26 +1273,35 @@ function goBack() {
 
     // if detail view is open -> go back to content view
     if (layoutViz(detailView)) {
-        if (openFromReference) { openMenuById(openFromReference); openFromReference = null; return; }
+        if (openFromReference) { openMenuWithoutHistoryPush(openFromReference); openFromReference = null; return; }
         const m = getMenuData(currentMenu());
-        changeBackBtnText(m.parent && !openSingle ? getMenuData(m.parent).title : 'Close')
-        // detailViewContent.innerHTML = '';
+        changeBackBtnText(m.parent && !openSingle ? getMenuData(m.parent).title : 'Close');
         setLayoutViz(detailView, false);
         setLayoutViz(contentView, true);
         setButtonViz(sortBtn, true);
         setButtonViz(rerollBtn, false);
-        setHistoryState(contentView.dataset.currentMenuId);
+        
+        // update URL without adding another history entry
+        const menuId = contentView.dataset.currentMenuId;
+        if (menuId) history.replaceState({}, '', `?m=${menuId}`); else history.replaceState({}, '', window.location.pathname);
         return;
 
         // if content view is open
     } else if (layoutViz(contentView)) {
         const parentMenu = getMenuData(currentMenu()).parent;
         // if parent menu exists
-        if (parentMenu) { openMenuById(parentMenu); return; }
+        if (parentMenu) { openMenuWithoutHistoryPush(parentMenu); history.replaceState({}, '', `?m=${parentMenu}`); return; }
 
         // if no parent menu -> go back to main menu
         returnToMainMenu();
     }
+}
+
+// open menu but do not push the history
+function openMenuWithoutHistoryPush(menuId) {
+    ignoreHistoryPush = true;
+    openMenuById(menuId);
+    ignoreHistoryPush = false;
 }
 
 // return to main menu
@@ -1441,7 +1314,7 @@ function returnToMainMenu() {
     setButtonViz(sortBtn, false);
     menuIsOpen = false;
 
-    setHistoryState(null);
+    history.replaceState({}, '', window.location.pathname);
 }
 
 // internal link handler: <a data-open-card="q:id">
@@ -1459,12 +1332,16 @@ document.addEventListener('click', (e) => {
     openMenuById(menuCode);
 });
 
-// keyboard control
-document.addEventListener('keydown', (e) => { if (e.key === 'Escape') goBack(); });
-document.addEventListener('keydown', (e) => {
-    if (e.key === ' ') { e.preventDefault(); openSearchBox(); }
-});
-
+// --------------------------
+// KEYBINDS
+// --------------------------
+document.addEventListener("keydown", (e) => {
+    const ae = document.activeElement;
+    const inInput = ae && (ae.tagName === 'INPUT' || ae.tagName === 'TEXTAREA' || ae.tagName === 'SELECT' || ae.isContentEditable);
+    if (inInput) return;
+    if (e.key === ' ') openSearchBox();
+    if (e.key === 'Escape') goBack();
+})
 
 
 
@@ -1473,13 +1350,15 @@ document.addEventListener('keydown', (e) => {
 // URL PARAMS ON LOAD
 // --------------------------
 
+// history management helpers
+let ignoreHistoryPush = false; // when true, setHistoryState does nothing
+
 // set the history state by rewriting the URL parameters
 function setHistoryState(menuId, cardId = null) {
-    if (!menuId) {
-        history.pushState({}, '', window.location.pathname);
-        return;
-    }
-    history.pushState({}, '', `?m=${menuId}${cardId ? `&i=${cardId}` : ''}`);
+    if (ignoreHistoryPush) return;
+    const url = !menuId ? window.location.pathname
+        : `?m=${menuId}${cardId ? `&i=${cardId}` : ''}`;
+    history.pushState({}, '', url);
 }
 
 // wait for a card element to appear in the content grid (used for URL param loading)
@@ -1501,15 +1380,19 @@ async function loadAndPopstateHandler() {
     const card = params.get('i');
 
     const targetMenu = menuItems.find(m => m.menuId === menu);
-    if (!targetMenu) {
-        returnToMainMenu(); return;
-    };
+    if (!targetMenu) { returnToMainMenu(); return; };
+
+    // when responding to a popstate event we do *not* want to push another history entry,
+    // otherwise the browser back button never actually moves back.  Instead we temporarily
+    // ignore history pushes while opening the requested menu/card and then restore the flag.
+    ignoreHistoryPush = true;
 
     openMenuById(targetMenu.menuId);
     if (card && targetMenu) {
         const cardEl = await waitForCard(card, 2000, 40);
         if (cardEl) openCard(cardEl, getCardData(menu, card));
-    }
+    } else openSingle = false;
+    ignoreHistoryPush = false;
 }
 
 

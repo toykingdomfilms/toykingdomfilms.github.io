@@ -3,7 +3,7 @@
 // tip: press ctrl+f on your keyboard to navigate around easily!
 
 // Metadata
-const lastUpdated = '2026-3-3';
+const lastUpdated = '2026-3-4';
 const version = '1.0.2';
 
 
@@ -69,14 +69,16 @@ orbitData = [
 // linkId: string           - if set as the only attribute, this card links to another menu (menuId)
 // reference: string        - if set as the only attribute, this card copies another card (menuId:cardId)
 // isCharacter: bool        - if set, this is a character card
-// cSpecies: string         - the character species. optional
-// cAge: string             - the character age. optional
-// cGender: string          - the character gender. optional
-// cBirthday: string        - the character birthday. optional
-// cNicknames: string       - the character nicknames. optional
-// cAddOns: string          - extra HTML put above the reference art of the character. optional
-// cReference: string       - path to the character reference art. optional
-// cGallery: array          - array of path to character images. optional
+// species: string          - the character species. optional
+// age: string              - the character age. optional
+// gender: string           - the character gender. optional
+// birthday: string         - the character birthday. optional
+// nicknames: string        - the character nicknames. optional
+// addOns: string           - extra HTML put above the reference art of the character. optional
+// refsheet: string         - path to the character reference art. optional
+// gallery: array           - array of path to character images. optional
+// relatives : array        - array of path to postiive relationship cards. optional
+// negative : array         - array of path to negative relationship cards. optional
 // cardParentId: string     - DEV ONLY: contains the automatically-assigned menuId of this card
 menuItems = [
     // Orbit 1
@@ -278,135 +280,67 @@ menuItems = [
                 title: 'Info',
                 subtitle: 'About Super Golden Flash',
                 detail: `
-                    <h2>Theme</h2>
-                    <ul>
-                    <li><b>Original:</b> Regular/Ground/Insects/Disabillity/Water/Trick or Treat/Random/Food</li><br>
-                    <li><b>Aesthetic:</b> Color changing/Glowing/Glitter/Mystical/Snow/Space</li><br>
-                    <li><b>Leaders:</b> Coleader (Irregular)/Nathan's 8 special assistants</li><br>
-                    <li><b>Careers:</b> Detective/Career</li><br>
-                    <li><b>The Holidays:</b> Valentines/Easter/Halloween (mostly trick or treat)/Christmas</li><br>
-                    </ul>
                 `,
                 banner: true,
                 image: 'icons/lightning-bolt-yellow.png'
             },
             {
-                cardId: 'no-owner',
-                title: 'No Owner',
-                subtitle: 'SGF with no owner',
+                linkId: 'sgf',
                 semibanner: true,
-                detail: `
-                `,
-                image: ''
             },
             {
-                cardId: 'power-change',
-                title: 'Power Change',
-                subtitle: `SGF who's power needs revising`,
+                linkId: 'helpers',
                 semibanner: true,
-                detail: `
-                `,
-                image: ''
             },
-            {
-                title: 'SGF',
-                subtitle: '',
-            },
-            { linkId: 'sgf1' },
-            { linkId: 'sgf2' },
-            { linkId: 'sgf3' },
-            { linkId: 'sgf4' },
-            {
-                title: 'Helpers',
-                subtitle: '',
-            },
-            { linkId: 'helpers1' },
-            { linkId: 'helpers2' },
-            { linkId: 'helpers3' },
         ]
     },
-    {
-        title: '1',
-        menuId: 'sgf1',
+     {
+        title: 'SGF',
+        menuId: 'sgf',
         subtitle: '',
         image: 'icons/lightning-bolt.png',
         color: 'var(--color-8)',
         hidden: true,
         parent: 'supergoldenflash',
         labels: [
+            {
+                linkId: 'helpers',
+                banner: true,
+            },
+            {
+                cardId: 'info',
+                title: 'Info',
+                subtitle: 'About Super Golden Flash',
+                detail: `
+                `,
+                banner: true,
+                image: 'icons/lightning-bolt-yellow.png'
+            },
         ], 
     },
     {
-        title: '2',
-        menuId: 'sgf2',
-        subtitle: '',
-        image: 'icons/lightning-bolt.png',
-        color: 'var(--color-8)',
-        hidden: true,
-        parent: 'supergoldenflash',
-        labels: [
-                
-                ], 
-    },
-    {
-        title: '3',
-        menuId: 'sgf3',
-        subtitle: '',
-        image: 'icons/lightning-bolt.png',
-        color: 'var(--color-8)',
-        hidden: true,
-        parent: 'supergoldenflash',
-        labels: [
-                
-                ], 
-    },
-    {
-        title: '4',
-        menuId: 'sgf4',
-        subtitle: '',
-        image: 'icons/lightning-bolt.png',
-        color: 'var(--color-8)',
-        hidden: true,
-        parent: 'supergoldenflash',
-        labels: [
-                
-                ], 
-    },
-    {
-        title: '1',
-        menuId: 'helpers1',
+        title: 'Helpers',
+        menuId: 'helpers',
         subtitle: '',
         image: 'icons/plug.png',
         color: 'var(--color-9)',
         hidden: true,
         parent: 'supergoldenflash',
         labels: [
-                
-                ], 
-    },
-    {
-        title: '2',
-        menuId: 'helpers2',
-        subtitle: '',
-        image: 'icons/plug.png',
-        color: 'var(--color-9)',
-        hidden: true,
-        parent: 'supergoldenflash',
-        labels: [
-                
-                ], 
-    },
-    {
-        title: '3',
-        menuId: 'helpers3',
-        subtitle: '',
-        image: 'icons/plug.png',
-        color: 'var(--color-9)',
-        hidden: true,
-        parent: 'supergoldenflash',
-        labels: [
-                
-                ], 
+            {
+                linkId: 'sgf',
+                banner: true,
+            },
+            {
+                cardId: 'info',
+                title: 'Info',
+                subtitle: 'About Super Golden Flash',
+                detail: `
+                `,
+                banner: true,
+                image: 'icons/lightning-bolt-yellow.png'
+            },
+        ], 
     },
     {
         title: 'Antagonists',
@@ -522,11 +456,11 @@ menuItems = [
     },
     {   // Filmy Kingdom
         orbit: 1,
-        menuId: 'filmykingdom',
-        title: 'Filmy Kingdom',
+        menuId: 'kingdomunite',
+        title: 'Kingdom Unite',
         subtitle: '',
-        image: 'icons/crown.png',
-        color: 'var(--color-4)',
+        image: 'images/temp2.png',
+        color: 'var(--color-5)',
         scale: 1,
         hidden: true,
         labels: [
@@ -538,31 +472,7 @@ menuItems = [
                 banner: true,
                 image: 'icons/crown.png'
             },
-            { linkId: 'space2go' },
-            { linkId: 'kingdomunite' },
         ]
-    },
-    {
-        title: 'Space2Go',
-        menuId: 'space2go',
-        subtitle: '',
-        image: 'images/temp2.png',
-        color: 'var(--color-3)',
-        hidden: true,
-        parent: 'filmykingdom',
-        labels: [
-                ], 
-    },
-    {
-        title: 'Kingdom Unite',
-        menuId: 'kingdomunite',
-        subtitle: '',
-        image: 'images/temp2.png',
-        color: 'var(--color-5)',
-        hidden: true,
-        parent: 'filmykingdom',
-        labels: [
-                ], 
     },
     // Orbit 2
     /*{   // Basic Info
@@ -591,25 +501,23 @@ menuItems = [
                 subtitle: '',
 
                 isCharacter: true, 
-                cSpecies: 'Monkey',
-                cAge: 'unknown',
-                cGender: 'male',
-                cBirthday: 'mm/dd/yyyy',
-                cNicknames: '',
-                cAddOns: `Source: <a href="https://knowyourmeme.com/memes/thinking-monkey">knowyourmeme.com</a>`,
-                cReference: 'images/r/thinking-monkey-r.jpg',
-                cGallery: [
-                   'images/r/thinking-monkey-r.jpg',
-                   'images/r/thinking-monkey-r.jpg',
-                   'images/r/thinking-monkey-r.jpg',
-                   'images/r/thinking-monkey-r.jpg',
-                   'images/r/thinking-monkey-r.jpg',
-                   'images/r/thinking-monkey-r.jpg',
+                species: 'Monkey',
+                age: 'unknown',
+                gender: 'male',
+                birthday: 'mm/dd/yyyy',
+                nicknames: '',
+                addOns: `Source: <a href="https://knowyourmeme.com/memes/thinking-monkey">knowyourmeme.com</a>`,
+                refsheet: 'images/r/thinking-monkey-r.jpg',
+                gallery: [
+                    'images/r/thinking-monkey-r.jpg',
                     ],
                 detail: `
                     <span style="border-left: 6px solid var(--white); padding-right: 8px"></span><span> The only limit to our realization of tomorrow is our doubts of today.</span><br> 
                     <span style="border-left: 6px solid var(--white); padding-right: 8px"></span>— person <br><br>
                     Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020. 
+                    <h2>Appearance</h2>
+                    Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
+                    <hr> 
                     <h2>Personality</h2>
                     Thinking Monkey is an exploitable image macro meme featuring a monkey standing in front of a seaport looking up with his finger in the corner of his mouth, as though he is deep in thought or contemplating something. The photo of the monkey is often used in memes to joke about coming up with an idea or ruminating over something. The image was originally taken at the island of Gibraltar, a British territory off the coast of Spain, which is known for its population of Barbary macaques. The image was originally posted to DeviantArt by user anagw8 in late 2011, with a low-quality version of the meme making the rounds on Instagram, Twitter / X and TikTok after 2020.
                     <hr> 
@@ -631,13 +539,13 @@ menuItems = [
                     <li>test trivia lalalalallalalalalalaaaaa</li>
                     </ul> 
                     `,
-                cPositive: [
+                relatives: [
                     {
                         cardId: 'companies:thinkingMonkey',
                         relation: 'caption'
                     },
                 ],
-                cNegative: [
+                negative: [
                     {
                         cardId: 'companies:thinkingMonkey',
                         relation: 'caption'
@@ -796,7 +704,7 @@ menuItems = [
                 title: 'Kidnap Cases: A TOTS Story',
                 subtitle: 'By Tiggy  • 2023-4-5',
                 detail: `
-                    <img src="images/boo-running.jpg" align="right" height="400px">
+                    <img src="images/boo-running.jpg" align="right" height="300px">
                     My baby brother is in danger. Boo may not seem in danger. This is a image of Boo running away on the sidewalk. This image was token by the kidnapper. The person who find kidnapper ask to give any images if he took any pictures and this is the result. Boo was injured badly. He had marks of sharp mirrors, his asma became worse, and he was weak. But I am thankful he did not die. The kidnapper do take care of Boo but made him injured too. I've been worried because it took so long before I see Boo. Actually Boo was 6 months in that time. 7 months when we found him.
                     <br><br>
                     The person who found Boo took Boo to the orphanage. But as soon saw our post. He went to the orphanage showing the post. Before he chatted about Boo, he sent him in the hospital. Then after he feels well, he chatted he found Boo. That's why it might took long before we saw him. It took 10 days with the kidnapper, and 14 days in the hospital. Boo cried when he saw the kidnapper, the person who found him, and the mother who took care of him. Speaking of mother who took care of him it took 6 days before he discovered this was our child.
@@ -843,7 +751,7 @@ menuItems = [
         color: 'var(--color-2)',
         scale: 1.5,
         invisible: true,
-        labels: [],
+        labels: [ {cardId: 'random'} ],
     },
 ];
 
