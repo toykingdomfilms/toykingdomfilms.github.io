@@ -3,8 +3,8 @@
 // tip: press ctrl+f on your keyboard to navigate around easily!
 
 // Metadata
-const lastUpdated = '2026-3-4';
-const version = '1.0.2';
+const lastUpdated = '2026-3-6';
+const version = '1.0.3';
 
 
 
@@ -43,43 +43,47 @@ orbitData = [
 // Main menu data array
 
 // menu attributes:
-// menuId: string           - REQUIRED: unique identifier for the menu (alphanumeric, no spaces)
-// title: string            - menu name and title
-// subtitle: string         - short description of menu
-// showTitle: bool          - show name in orbit?
-// orbit: float             - orbit id and default layer placement
-// image: string            - path to the menu thumbnail image. optional
-// color: string            - CSS color of menu. optional
-// scale: float             - if set, modify the menu button scale
-// hidden: bool             - if set, hide menu from orbit (accessible via links only)
-// invisible: bool          - if set, exclude from search
-// labels: array            - cards inside this menu. optional. if a menu has only one card it'll open that automatically
+// menuId: string                      - REQUIRED: unique identifier for the menu (alphanumeric, no spaces)
+// title: string                       - menu name and title
+// subtitle: string                    - short description of menu
+// showTitle: bool                     - show name in orbit?
+// orbit: float                        - orbit id and default layer placement
+// image: string                       - path to the menu thumbnail image. optional
+// color: string                       - CSS color of menu. optional
+// scale: float                        - if set, modify the menu button scale
+// hidden: bool                        - if set, hide menu from orbit (accessible via links only)
+// invisible: bool                     - if set, exclude from search
+// labels: array                       - cards inside this menu. optional. if a menu has only one card it'll open that automatically
 
 // card attributes:
-// cardId: string           - unique identifier for the card (alphanumeric, no spaces). if unset, this becomes a separator
-// title: string            - card title
-// subtitle: string         - short description / excerpt of card
-// detail: string           - the HTML contents of this card
-// image: string            - path to the card thumbnail image. optional
-// url: string              - if set, this card becomes a URL-type card
-// unclickable: bool        - if set, this card becomes unclickable
-// blank: bool              - if set, make this card textless (image-only)
-// banner: bool             - if set, this card becomes a banner-type card
-// semibanner: bool         - if set, this card becomes a semibanner-type card which is only 50% in length so you could fit two in a single row (might be wacky sometimes)
-// linkId: string           - if set as the only attribute, this card links to another menu (menuId)
-// reference: string        - if set as the only attribute, this card copies another card (menuId:cardId)
-// isCharacter: bool        - if set, this is a character card
-// species: string          - the character species. optional
-// age: string              - the character age. optional
-// gender: string           - the character gender. optional
-// birthday: string         - the character birthday. optional
-// nicknames: string        - the character nicknames. optional
-// addOns: string           - extra HTML put above the reference art of the character. optional
-// refsheet: string         - path to the character reference art. optional
-// gallery: array           - array of path to character images. optional
-// relatives : array        - array of path to postiive relationship cards. optional
-// negative : array         - array of path to negative relationship cards. optional
-// cardParentId: string     - DEV ONLY: contains the automatically-assigned menuId of this card
+// cardId: string                      - unique identifier for the card (alphanumeric, no spaces). if unset, this becomes a separator
+// title: string                       - card title
+// subtitle: string                    - short description / excerpt of card
+// detail: string                      - the HTML contents of this card
+// image: string                       - path to the card thumbnail image. optional
+// url: string                         - if set, this card becomes a URL-type card
+// unclickable: bool                   - if set, this card becomes unclickable
+// blank: bool                         - if set, make this card textless (image-only)
+// banner: bool                        - if set, this card becomes a banner-type card
+// semibanner: bool                    - if set, this card becomes a semibanner-type card which is only 50% in length so you could fit two in a single row (might be wacky sometimes)
+// linkId: string                      - if set as the only attribute, this card links to another menu (menuId)
+// reference: string                   - if set as the only attribute, this card copies another card (menuId:cardId)
+// isCharacter: bool                   - if set, this is a character card
+// species: string                     - the character species. optional
+// age: string                         - the character age. optional
+// gender: string                      - the character gender. optional
+// birthday: string                    - the character birthday. optional
+// nicknames: string                   - the character nicknames. optional
+// addOns: string                      - extra HTML put in the infobox of the character. optional. add <div class="infoLabel">label</div><div class="infoContent">answer</div> for more labels
+// gallery: array                      - array of path to character images. optional
+// relatives: { cardId, relation }     - add internal cards, which are custom cards that redirect to another card (menuId:cardId). (pos relationships)
+// negative: { cardId, relation }      - add internal cards, which are custom cards that redirect to another card (menuId:cardId). (neg relationships)
+// sections: { title, detail }         - add a new section to the card
+// cardParentId: string                - DEV ONLY: contains the automatically-assigned menuId of this card
+
+// custom properties: ----
+// showInfobox: bool                   - if set, adds an infobox to the page
+// infoTabs: { title, image }          - add a new tab to the infobox. add the image path in image:''.
 menuItems = [
     // Orbit 1
     {   //TOTS
@@ -189,6 +193,20 @@ menuItems = [
         color: 'var(--color-1)',
         scale: 1,
         labels: [
+            {
+                cardId: 'wip',
+                title: 'Info',
+                subtitle: 'Collection WIPs',
+                detail: `
+                        <h2>the page is also a wip lol</h2>
+                        <ul>
+                            <li>Nothing here</li>
+                        </ul>
+                        <h2>Your WIP is not here? You can submit new additions <a href="https://docs.google.com/forms/d/e/1FAIpQLScJ2o5HPoUATWneboWSCli6Ry_-ftZpoGf7iUxsEm5umpzvaA/viewform" target="_BLANK">here</a></h2>
+                `,
+                banner: true,
+                image: ''
+            },
             { title: 'Animals' },
             { linkId: 'puppy-planet' },
             { linkId: 'cats' },
@@ -506,8 +524,8 @@ menuItems = [
                 gender: 'male',
                 birthday: 'mm/dd/yyyy',
                 nicknames: '',
-                addOns: `Source: <a href="https://knowyourmeme.com/memes/thinking-monkey">knowyourmeme.com</a>`,
-                refsheet: 'images/r/thinking-monkey-r.jpg',
+                addOns: `<div class="infoLabel">Source</div><div class="infoContent"><a href="https://knowyourmeme.com/memes/thinking-monkey">knowyourmeme.com</a></div>`,
+                showInfobox: true,
                 gallery: [
                     'images/r/thinking-monkey-r.jpg',
                     ],
@@ -549,6 +567,16 @@ menuItems = [
                     {
                         cardId: 'companies:thinkingMonkey',
                         relation: 'caption'
+                    },
+                ],
+                infoTabs: [
+                    {
+                        title: 'Sample tab',
+                        image: 'images/r/thinking-monkey-r.jpg',
+                    },
+                    {
+                        title: 'Sample tab 2',
+                        image: 'images/temp2.png',
                     },
                 ],
                 image: 'images/i/thinking-monkey-i.jpg'
@@ -663,7 +691,7 @@ menuItems = [
             {
                 cardId: 'todolist',
                 title: 'To do List',
-                subtitle: `By Admin  • 2026-2-17 <br>Updated: 2026-2-20`,
+                subtitle: `By Admin  • 2026-2-17 <br>Updated: 2026-3-6`,
                 detail: `
                     <h2>High priority</h2>
                     <ul>
@@ -671,13 +699,12 @@ menuItems = [
                     </ul>
                     <h2>Mid priority</h2>
                     <ul>
-                        <li>Move all character info to a mini infobox</li>
+                        <li>Nothing here!</li>
                     </ul>
                     <h2>Low priority</h2>
                     <ul>
                         <li>Add random generators</li>
                         <li>Make a homepage</li>
-                        <li>Make a list of crochet wips and the abillity to add new ones</li>
                     </ul>
                         `,
             },

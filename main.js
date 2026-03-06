@@ -120,6 +120,17 @@ async function copyToClipboard(button, textbox) {
     }
 }
 
+// extract image urls from html string
+function extractImagesFromHTML(html) {
+    const regex = /<img[^>]+src="([^"]+)"/g;
+    let match;
+    const urls = [];
+    while ((match = regex.exec(html)) !== null) {
+        urls.push(match[1]);
+    }
+    return urls;
+}
+
 
 
 
@@ -778,47 +789,81 @@ function renderCardDetail(c) {
 
     let tabs = '';
     let gallery = '', relatives = '';
-    const hasGallery = (c.gallery && c.gallery.length != 0) || (c.reference);
-    if (hasGallery || c.relatives) {
+    const images = extractImagesFromHTML(html);
+    const hasGallery = (c.gallery && c.gallery.length != 0) || (images && images.length != 0) || (c.refsheet);
+
+    let sectionData;
+    if (c.sections) sectionData = createCardSections(c);
+    if (hasGallery || c.relatives || c.sections) {
+
         tabs = `
             <button class="tab main" type="button">Character</button>
+            ${sectionData ? sectionData.tabs : ''}
             ${hasGallery ? `<button class="tab gallery" type="button">Gallery</button>` : ''}
             ${c.relatives ? `<button class="tab relatives" type="button">Relationships</button>` : ''}
             `
-        gallery = hasGallery ? `<div class="container grid">` + (c.reference ? `<img src=${c.reference}>` : '') + (c.gallery ? c.gallery.map(imgSrc => `<img src="${imgSrc}">`).join('') : '') + `</div><br>` : '';
-        relatives = c.relatives ? c.relatives.length != 0 ? `<div class="container">` + c.relatives.map(rel => `<div class="card internal" data-href="${rel.cardId}" data-caption="${rel.relation}"></div>`).join('') + `</div><br>` : '' : '';
-        negative = c.negative ? c.negative.length != 0 ? `<div class="container">` + c.negative.map(rel => `<div class="card internal" data-href="${rel.cardId}" data-caption="${rel.relation}"></div>`).join('') + `</div><br>` : '' : '';
+
+        gallery = hasGallery ? `<div class="container grid">`
+            + (c.refsheet ? `<img src=${c.refsheet}>` : '')
+            + (c.gallery ? c.gallery.map(imgSrc => `<img src="${imgSrc}">`).join('') : '')
+            + (images ? images.map(imgSrc => (!c.gallery?.includes(imgSrc) && !(c.refsheet === imgSrc)) ? `<img src="${imgSrc}">` : '').join('') : '')
+            + `</div><br>`
+            : '';
+
+        relatives = c.relatives ? c.relatives.length != 0 ? `<div class="container">`
+            + c.relatives.map(rel => `<div class="card internal" data-href="${rel.cardId}" data-caption="${rel.relation}"></div>`).join('')
+            + `</div><br>`
+            : '' : '';
+        
+        negative = c.negative ? c.negative.length != 0 ? `<div class="container">`
+            + c.negative.map(rel => `<div class="card internal" data-href="${rel.cardId}" data-caption="${rel.relation}"></div>`).join('')
+            + `</div><br>`
+            : '' : '';
     }
 
     const tabEl = tabs ? `<small class="detail-view-tabs">${tabs}</small><br>` : '';
-
     const mainSection = `
         <div class="detail-section detail-main">
             ${!c.blank
             ? `
                 <small class="card-parent-link"><a data-open-card="${menu.menuId}">${menu.title}</a> /</small>
                 <h1 style="margin-top: 0;">${c.title} ${copyLinkIcon}</h1>`
-             : `<small class="card-parent-link">From <a data-open-card="${menu.menuId}">${menu.title}</a></small>${copyLinkIcon}`}
+            : `<small class="card-parent-link">From <a data-open-card="${menu.menuId}">${menu.title}</a></small>${copyLinkIcon}`}
         <hr>
         ${html}
         </div>`;
 
     const gallerySection = gallery ? `<div class="detail-section detail-gallery remove">${gallery}</div>` : '';
     const relativesSection = relatives 
-        ? `
+    ? `
             <div class="detail-section detail-relatives remove">
                 <h2>Positive relationships</h2>${relatives}<hr>
                 <h2>Negative relationships</h2>${negative}
             </div>
         ` : '';
+    const customSection = sectionData ? sectionData.html ? sectionData.html.map(d => `<div class="detail-section detail-${c.sections[sectionData.html.indexOf(d)].title} remove">${d}</div>`).join('') : '' : '';
 
-    detailViewContent.innerHTML = `${tabEl}${mainSection}${gallerySection}${relativesSection}`;
+    detailViewContent.innerHTML = `${tabEl}${mainSection}${customSection}${gallerySection}${relativesSection}`;
 
     // cardDetailScriptHandler(c);
     copyLinkHandler(detailView, menu.menuId, c.cardId);
     if (tabs) handleDetailViewTabs();
+    if (tabs) handleInfoboxTabs();
 
     internalCardHandler();
+}
+
+// create custom sections
+function createCardSections(c) {
+    let tabs = '';
+    let html = [];
+    c.sections.forEach(s => {
+        const secTitle = s.title;
+        const secDetail = s.detail;
+        tabs += `<button class="tab" type="button">${secTitle}</button>`;
+        html.push(secDetail);
+    });
+    return { tabs, html };
 }
 
 // handle navigation tabs on the detail view
@@ -826,21 +871,18 @@ function handleDetailViewTabs() {
     const tabsContainer = detailViewContent.querySelector('.detail-view-tabs');
     if (!tabsContainer) return;
 
-    const btnMain = tabsContainer.querySelector('button.tab.main');
-    const btnGallery = tabsContainer.querySelector('button.tab.gallery');
-    const btnRelatives = tabsContainer.querySelector('button.tab.relatives');
+    const btns = tabsContainer.querySelectorAll('button.tab');
+    const secs = detailViewContent.querySelectorAll('.detail-section');
 
-    const secMain = detailViewContent.querySelector('.detail-main');
-    const secGallery = detailViewContent.querySelector('.detail-gallery');
-    const secRelatives = detailViewContent.querySelector('.detail-relatives');
-
+    // function to set a tab button as active
     function setActive(button) {
-        tabsContainer.querySelectorAll('button.tab').forEach(b => b.classList.remove('active'));
+        btns.forEach(b => b.classList.remove('active'));
         if (button) button.classList.add('active');
     }
 
+    // funtion to show the section
     function showSection(section) {
-        [secMain, secGallery, secRelatives].forEach(s => { if (!s) return; s.classList.add('remove'); });
+        secs.forEach(s => { if (!s) return; s.classList.add('remove'); });
         if (section) {
             section.classList.remove('remove');
             section.classList.add('no-transition');
@@ -854,13 +896,75 @@ function handleDetailViewTabs() {
         }
     }
 
-    // initialize: show main by default
-    setActive(btnMain);
-    showSection(secMain);
+    // show main by default
+    setActive(btns[0]);
+    showSection(secs[0]);
 
-    if (btnMain) btnMain.addEventListener('click', () => { setActive(btnMain); showSection(secMain); });
-    if (btnGallery && secGallery) btnGallery.addEventListener('click', () => { setActive(btnGallery); showSection(secGallery); });
-    if (btnRelatives && secRelatives) btnRelatives.addEventListener('click', () => { setActive(btnRelatives); showSection(secRelatives); internalCardHandler(); });
+    // handle tab clicking
+    btns.forEach(b => {
+        b.addEventListener('click', () => {
+            setActive(b);
+            const bs = b.parentNode;
+            showSection(secs[Array.prototype.indexOf.call(bs.children, b)]);
+        });
+    })
+}
+
+// create custom infobox tabs
+function createInfotabs(c) {
+    let tabs = '';
+    let html = [];
+    c.infoTabs.forEach(s => {
+        const iTabTitle = s.title;
+        const iTabImage = s.image;
+        tabs += `<button class="tab" type="button">${iTabTitle}</button>`;
+        html.push(iTabImage)
+    });
+    return { tabs, html };
+}
+
+// handle navigation tabs on the infobox
+function handleInfoboxTabs() {
+    const tabsContainer = detailViewContent.querySelector('.infoTabs');
+    if (!tabsContainer) return;
+
+    const btns = tabsContainer.querySelectorAll('button.tab');
+    const secs = detailViewContent.querySelectorAll('.infoImage');
+
+    // function to set a tab button as active
+    function setActive(button) {
+        btns.forEach(b => b.classList.remove('active'));
+        if (button) button.classList.add('active');
+    }
+
+    // funtion to show the section
+    function showSection(section) {
+        secs.forEach(s => { if (!s) return; s.classList.add('remove'); });
+        if (section) {
+            section.classList.remove('remove');
+            section.classList.add('no-transition');
+            section.style.opacity = 0;
+            section.style.transform = "translateX(20px)";
+            setTimeout(() => {
+                section.classList.remove('no-transition');
+                section.style.opacity = 1;
+                section.style.transform = "none";
+            }, 1);
+        }
+    }
+
+    // show main by default
+    setActive(btns[0]);
+    showSection(secs[0]);
+
+    // handle tab clicking
+    btns.forEach(b => {
+        b.addEventListener('click', () => {
+            setActive(b);
+            const bs = b.parentNode;
+            showSection(secs[Array.prototype.indexOf.call(bs.children, b)]);
+        });
+    })
 }
 
 // handles card that are placed as div element inside the detail view
@@ -876,25 +980,39 @@ function internalCardHandler() {
 // HTML builder for character cards
 function cardHTMLBuilder(c) {
     let html = c.detail || '';
-    if (c.isCharacter) {
-    const species = c.species ? `Species: ${c.species}<br>` : '';
-    const age = c.age ? `Age: ${c.age}<br>` : '';
-    const gender = c.gender ? `Gender: ${c.gender}<br>` : '';
-    const birthday = c.birthday ? `Birthday: ${c.birthday}<br>` : '';
-    const nicknames = c.nicknames ? `Nickname: ${c.nicknames}<br>` : '';
-    const refsheet = c.refsheet ? `<img src="${c.refsheet}" align="right" width="400px">` : '';
+    if (c.showInfobox) {
+    const species = c.species ? `<div class="infoLabel">Species</div><div class="infoContent">${c.species}</div>` : '';
+    const age = c.age ? `<div class="infoLabel">Age</div><div class="infoContent">${c.age}</div>` : '';
+    const gender = c.gender ? `<div class="infoLabel">Gender</div><div class="infoContent">${c.gender}</div>` : '';
+    const birthday = c.birthday ? ` <div class="infoLabel">Birthday</div><div class="infoContent">${c.birthday}</div>` : '';
+    const nicknames = c.nicknames ? `<div class="infoLabel">Nicknames</div><div class="infoContent">${c.nicknames}</div>` : '';
     const addOns = c.addOns ? `<br>${c.addOns}<br>` : '';
-    const details = c.detail ? `<hr>${html}<br>` : '';
+    const details = c.detail ? `${html}<br>` : '';
+
+    // infobox tabs ----------------
+    let tabs = '';
+    let infoTabData;
+    if (c.infoTabs) infoTabData = createInfotabs(c);
+    if (c.infoTabs) { tabs = ` ${infoTabData ? infoTabData.tabs : ''} ` }
+    const customInfoTabs = infoTabData ? infoTabData.html ? infoTabData.html.map(d => `<img src="${d}" class="infoImage tab-${c.infoTabs[infoTabData.html.indexOf(d)].title} remove">`).join('') : '' : ''; 
 
     
+
     html = `
-        ${refsheet}
-        ${species}
-        ${age}
-        ${gender}
-        ${birthday}
-        ${nicknames}
-        ${addOns}
+        <div class="infobox">
+        <h2 class="infoTitle">${c.title}</h2>
+        <div class="infoTabs">${tabs}${customInfoTabs}</div>
+        <hr>
+        <div class="infoGrid">
+            ${species}
+            ${age}
+            ${gender}
+            ${birthday}
+            ${nicknames}
+            ${addOns}
+        </div>
+    </div> 
+    <br>
         ${details}
     `;
     }
@@ -1165,7 +1283,7 @@ cancelSearch.addEventListener('click', () => {
 
 // initialize lazy loader
 function initLazyLoader(root = document) {
-    if (LOCAL_MODE) return;
+    // if (LOCAL_MODE) return;
 
     const images = root.querySelectorAll('img[src]:not([data-lazy-processed])');
 
@@ -1173,23 +1291,27 @@ function initLazyLoader(root = document) {
         if (img.classList.contains("card-thumb-flip")) return;
         const originalSrc = img.getAttribute('src');
 
-        img.style.opacity = '0.2';
+        img.style.opacity = '0.1';
+        img.style.backgroundColor = 'var(--lazy-placeholder-bg)';
 
-        if (root == detailView) {
+        if (root == detailView && !img.classList.contains("thumb")) {
             img.style.display = 'block';
             img.style.aspectRatio = '4 / 5';
             img.style.width = '90%';
             img.style.objectFit = 'cover';
-            img.style.backgroundColor = 'var(--bg)';
         }
 
         // convert relative path to CDN path
+        /*
         const finalSrc = originalSrc.startsWith('http')
             ? originalSrc
             : LAZY_BASE + originalSrc;
+            */
+
+        const finalSrc = originalSrc;
 
         img.dataset.src = finalSrc;
-        img.removeAttribute('src');
+        img.setAttribute('src', 'icons/loading.gif');
         img.dataset.lazyProcessed = "true";
         if (root == detailView) img.dataset.lazyRoot = "detailView";
 
@@ -1202,7 +1324,7 @@ function initLazyLoader(root = document) {
 // lazy observer handler
 let lazyObserver;
 function observeLazyImages() {
-    if (LOCAL_MODE) return;
+    // if (LOCAL_MODE) return;
 
     if (!lazyObserver) {
         lazyObserver = new IntersectionObserver((entries, observer) => {
@@ -1216,9 +1338,10 @@ function observeLazyImages() {
                     img.style.width = "";
                     img.style.aspectRatio = "";
                     img.style.objectFit = "";
-                    if (img.dataset.lazyRoot == "detailView") img.style.backgroundColor = "";
+                    // if (img.dataset.lazyRoot == "detailView") img.style.backgroundColor = "";
                 };
 
+                img.style.backgroundColor = "";
                 img.src = img.dataset.src;
                 img.removeAttribute('data-src');
 

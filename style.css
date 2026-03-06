@@ -93,6 +93,11 @@
     --detail-img-hover-shadow: rgba(0, 0, 0, 0.5);
     --detail-caption-color: var(--accentl);
 
+    /* Infobox variables */
+    --infobox-bg: color-mix(in srgb, var(--accent) 40%, transparent);
+    --infobox-title-bg: color-mix(in srgb, var(--bg) 70%, transparent);
+    --detail-label-color: var(--accentl);
+
     /* Focused layout variables */
     --focused-layout-bg: color-mix(in srgb, var(--bg) 50%, transparent);
 
@@ -658,10 +663,10 @@ hr {
     display: flex;
     align-items: stretch;
     justify-content: center;
-    padding-top: 72px;
+    padding-top: 60px;
     padding-bottom: 90px;
-    padding-left: 50px;
-    padding-right: 50px;
+    padding-left: 30px;
+    padding-right: 30px;
     overflow-y: auto;
     z-index: 25;
     background: var(--focused-layout-bg);
@@ -678,8 +683,9 @@ hr {
 
 /* detail view header */
 .detail-view-header {
-    min-width: 200px;
+    min-width: 150px;
     max-width: 200px;
+    width: 15%;
     transition: transform 400ms, opacity 300ms;
     --card-scale: 0.875;
 }
@@ -885,6 +891,56 @@ a[data-open-card] {
 /* preview mode */
 .detail-view.preview-mode img {
     cursor: auto;
+}
+
+/* --------------------------
+    INFOBOX
+    -------------------------- */
+
+.infobox {
+    background: var(--infobox-bg);
+    width: 350px;
+    height: auto;
+    margin-left: auto;
+    border-radius: calc(10px * var(--rounding)); 
+    padding: calc(var(--card-padding) * var(--card-scale));
+    float: right;
+    margin: 10px;
+}
+
+.infobox .infoTitle {
+    background: var(--infobox-title-bg);
+    text-align: center;
+    padding: 10px;
+    border-radius: calc(10px * var(--rounding)); 
+    margin: 0px;
+    margin-bottom: 10px;
+}
+
+.infobox .infoImage {
+    max-width: 100%;
+    max-height: none;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.infobox .infoGrid {
+    display: flex;
+    flex-wrap: wrap;
+    line-height: 1.4;
+}
+
+.infobox .infoGrid .infoLabel {
+    font-weight: 700;
+    width: 50%;
+    color: var(--detail-label-color);
+    margin-bottom: .25rem
+
+}
+
+.infobox .infoGrid .infoContent {
+    width: 50%;
+    margin-bottom: .25rem
 }
 
 
@@ -1275,7 +1331,7 @@ textarea {
 }
 
 .remove {
-    display: none;
+    display: none !important;
 }
 
 .image-view.hidden {
@@ -1468,6 +1524,14 @@ textarea {
 
     .copy-link-active-card-wrapper::before {
         content: '';
+    }
+
+    .infobox {
+    width: inherit;
+    }
+
+    .infobox .infoGrid {
+    display: block;
     }
 }
 
